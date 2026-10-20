@@ -1,0 +1,62 @@
+window {
+    margin: 0px;
+    border: 1px solid #5294e2;
+    background-color: #383c4a;
+    font-family: Sans;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
+#input {
+    margin: 8px;
+    border: none;
+    color: #d3dae3;
+    background-color: #2f343f;
+    border-radius: 4px;
+    padding: 6px 10px;
+}
+
+#input:focus {
+    border: none;
+    outline: none;
+}
+
+#inner-box {
+    margin: 0px 8px 8px 8px;
+    background-color: transparent;
+}
+
+#outer-box {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+#scroll {
+    margin: 0px;
+    padding: 0px;
+}
+
+#text {
+    margin: 0px;
+    padding: 2px 6px;
+    color: #d3dae3;
+}
+
+#entry {
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+#entry:selected {
+    background-color: #5294e2;
+    border-radius: 4px;
+}
+
+#entry:selected #text {
+    color: #ffffff;
+}
+
+#img {
+    margin-right: 6px;
+}

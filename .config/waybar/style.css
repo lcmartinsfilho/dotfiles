@@ -1,0 +1,122 @@
+* {
+    font-family: 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+window#waybar {
+    background-color: #1a1b23;
+    color: #a9acb8;
+}
+
+button {
+    box-shadow: none;
+}
+
+button:hover {
+    background: inherit;
+    box-shadow: none;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    background-color: transparent;
+    color: #6b6e7c;
+}
+
+#workspaces button:hover {
+    background: transparent;
+    color: #f8f8f2;
+}
+
+#workspaces button.focused, #workspaces button.active {
+    background-color: transparent;
+    color: #f8f8f2;
+}
+
+#workspaces button.urgent {
+    background-color: transparent;
+    color: #f8f8f2;
+    text-decoration: underline;
+}
+
+#mode,
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpd,
+#language,
+#keyboard-state {
+    padding: 0 10px;
+    background-color: transparent;
+    color: #a9acb8;
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#network.disconnected,
+#pulseaudio.muted,
+#wireplumber.muted,
+#temperature.critical {
+    color: #f8f8f2;
+    text-decoration: underline;
+}
+
+@keyframes blink {
+    to {
+        background-color: #f8f8f2;
+        color: #1a1b23;
+    }
+}
+
+#battery.critical:not(.charging) {
+    color: #f8f8f2;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#privacy {
+    padding: 0;
+}
+
+#privacy-item {
+    padding: 0 5px;
+    color: #a9acb8;
+}

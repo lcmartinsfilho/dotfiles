@@ -1,0 +1,13 @@
+show=drun
+width=600
+height=400
+always_parse_args=true
+show_all=false
+print_command=false
+layer=overlay
+insensitive=true
+allow_markup=false
+allow_images=true
+image_size=24
+gtk_dark=true
+term=ptyxis
