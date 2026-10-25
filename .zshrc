@@ -113,6 +113,11 @@ alias ll="eza -lha"
 source <(fzf --zsh)
 export PATH="$HOME/.local/bin:$PATH"
 
+# nvm (same path on macOS and Linux)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+
 [ -f ~/.secrets ] && source ~/.secrets  # defines GITHUB_PERSONAL_ACCESS_TOKEN (untracked)
 
 alias upd="sh ~/upd.sh"
