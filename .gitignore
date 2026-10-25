@@ -1,3 +1,12 @@
 .secrets
 *.bak
 .config/alacritty/platform.toml
+.env
+.env.*
+*.pem
+*.key
+id_*
+*_history
+.claude.json*
+.credentials.yaml
+ngrok.yml

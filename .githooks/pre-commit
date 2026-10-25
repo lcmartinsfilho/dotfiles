@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Block commits that contain secrets (needs gitleaks on PATH).
+command -v gitleaks >/dev/null || { echo "pre-commit: gitleaks not installed, skipping scan" >&2; exit 0; }
+exec gitleaks git --staged --redact --no-banner
