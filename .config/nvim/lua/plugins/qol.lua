@@ -5,7 +5,10 @@ return {
     "stevearc/oil.nvim",
     lazy = false,
     keys = { { "-", "<cmd>Oil<cr>", desc = "Open parent directory" } },
-    opts = { view_options = { show_hidden = true } },
+    opts = {
+      view_options = { show_hidden = true },
+      keymaps = { ["q"] = "actions.close" },
+    },
   },
   {
     "folke/flash.nvim",

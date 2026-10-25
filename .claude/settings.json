@@ -1,22 +1,120 @@
 {
-  "permissions": {
-    "allow": [
-      "mcp__codegraph__*"
-    ]
-  },
-  "hooks": {
-    "UserPromptSubmit": [
+  "agentPushNotifEnabled" : true,
+  "hooks" : {
+    "Notification" : [
       {
-        "hooks": [
+        "hooks" : [
           {
-            "type": "command",
-            "command": "codegraph prompt-hook"
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "PreToolUse" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "SessionEnd" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "Stop" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "StopFailure" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStop" : [
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit" : [
+      {
+        "hooks" : [
+          {
+            "command" : "codegraph prompt-hook",
+            "type" : "command"
+          }
+        ]
+      },
+      {
+        "hooks" : [
+          {
+            "command" : "\/Users\/lcm\/.config\/iterm2\/cc-status",
+            "type" : "command"
           }
         ]
       }
     ]
   },
-  "tui": "fullscreen",
-  "agentPushNotifEnabled": true,
-  "model": "sonnet"
+  "model" : "sonnet",
+  "permissions" : {
+    "allow" : [
+      "mcp__codegraph__*"
+    ]
+  },
+  "tui" : "fullscreen"
 }
