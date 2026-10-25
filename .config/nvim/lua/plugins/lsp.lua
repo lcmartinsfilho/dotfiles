@@ -13,7 +13,7 @@ return {
       ensure_installed = {
         -- language servers
         "basedpyright", "ruff", "vtsls", "eslint-lsp", "lua-language-server",
-        "ltex-ls-plus",
+        "ltex-ls-plus", "clangd",
         -- formatters
         "prettier", "clang-format", "stylua",
         -- debug adapters
