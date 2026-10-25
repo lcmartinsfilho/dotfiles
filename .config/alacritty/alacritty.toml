@@ -32,10 +32,10 @@ white   = "#ffffff"
 
 [window]
 opacity = 0.9
-decorations = "None"
+decorations = "Full"
 decorations_theme_variant = "Dark"
 padding = { x = 6, y = 0 }
 dynamic_padding = true
 
 [font]
-size = 14.0
+size = 16.0
