@@ -1,3 +1,5 @@
+general.import = ["~/.config/alacritty/platform.toml"]
+
 [colors.primary]
 background = "#1a1b23"
 foreground = "#f8f8f2"
@@ -36,6 +38,3 @@ decorations = "Full"
 decorations_theme_variant = "Dark"
 padding = { x = 6, y = 0 }
 dynamic_padding = true
-
-[font]
-size = 16.0

@@ -1,2 +1,3 @@
 .secrets
 *.bak
+.config/alacritty/platform.toml
