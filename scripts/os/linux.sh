@@ -61,6 +61,7 @@ os_install_tools() {
 os_install_agents() {
   have claude || run bash -c "curl -fsSL https://claude.ai/install.sh | bash"
   install_codegraph
+  install_openspec
 }
 
 os_install_notes() {

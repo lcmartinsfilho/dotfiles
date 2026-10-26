@@ -39,6 +39,7 @@ os_install_base() {
 os_install_agents() {
   have claude || run brew install --cask claude-code || warn "claude-code cask failed; see https://claude.ai/install.sh"
   install_codegraph
+  install_openspec
 }
 
 os_install_notes() {

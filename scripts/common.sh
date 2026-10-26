@@ -110,6 +110,16 @@ install_codegraph() {
   fi
 }
 
+# OpenSpec CLI (spec-driven workflow); `openspec init` in a project sets up its Claude Code commands.
+install_openspec() {
+  have openspec && return 0
+  if have npm; then
+    run npm install -g @fission-ai/openspec@latest
+  else
+    warn "npm not on PATH yet; open a new shell and run: npm install -g @fission-ai/openspec@latest"
+  fi
+}
+
 install_nerd_symbols_font() {
   local dir="$HOME/.local/share/fonts/NerdFontsSymbolsOnly"
   [ -d "$dir" ] && return 0

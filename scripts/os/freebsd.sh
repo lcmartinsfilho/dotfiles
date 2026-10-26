@@ -45,6 +45,7 @@ os_install_agents() {
   local npm="npm install -g --prefix $HOME/.local"
   have basedpyright-langserver || run $npm basedpyright
   have codegraph               || run $npm @colbymchenry/codegraph
+  have openspec                || run $npm @fission-ai/openspec@latest
   have claude                  || run $npm @anthropic-ai/claude-code || warn "Claude Code could not be installed via npm on FreeBSD"
 }
 
