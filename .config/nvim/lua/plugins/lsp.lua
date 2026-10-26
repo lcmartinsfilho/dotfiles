@@ -1,5 +1,9 @@
 -- Language servers + the tools mason installs for them.
 -- rust-analyzer is handled by rustaceanvim (see rust.lua), not enabled here.
+-- Mason has no FreeBSD binaries (and no python3 there); on FreeBSD only the
+-- npm-based tools install via mason, the rest come from pkg(8) on PATH.
+local is_bsd = vim.uv.os_uname().sysname == "FreeBSD"
+
 return {
   {
     "williamboman/mason.nvim",
@@ -10,7 +14,9 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = {
+      ensure_installed = is_bsd and {
+        "vtsls", "eslint-lsp", "prettier", "js-debug-adapter",
+      } or {
         -- language servers
         "basedpyright", "ruff", "vtsls", "eslint-lsp", "lua-language-server",
         "ltex-ls-plus", "clangd",
@@ -58,7 +64,8 @@ return {
       vim.lsp.config("ltex_plus", {
         filetypes = { "markdown", "text", "tex", "gitcommit", "rst" },
         -- Empty JAVA_HOME makes the launcher use its bundled JDK (the shell's one is stale)
-        cmd_env = { JAVA_HOME = "" },
+        -- FreeBSD uses the generic tarball, which has no bundled JDK: point at pkg's OpenJDK
+        cmd_env = { JAVA_HOME = is_bsd and "/usr/local/openjdk21" or "" },
         settings = {
           ltex = {
             language = "auto",
