@@ -31,7 +31,7 @@ set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg, jxl-pixbuf-loader
-output * bg /home/lcm/Pictures/Wallpaper/sayan-nath-EMPwQ4oOS2Y-unsplash.jpg fill
+output * bg ~/Pictures/Wallpaper/wallpaper.jpg fill
 output eDP-1 scale 1
 focus_follows_mouse yes
 input type:touchpad tap enabled
