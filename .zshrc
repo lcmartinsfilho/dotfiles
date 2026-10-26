@@ -120,7 +120,8 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -f ~/.secrets ] && source ~/.secrets  # defines GITHUB_PERSONAL_ACCESS_TOKEN (untracked)
 
-alias upd="sh ~/upd.sh"
+# System update (picks the right script for this OS)
+alias upd="~/dotfiles/update.sh"
 
 # Keep secrets out of shell history (leading space = not recorded)
 setopt HIST_IGNORE_SPACE
