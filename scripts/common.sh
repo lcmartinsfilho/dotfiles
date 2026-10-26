@@ -173,7 +173,8 @@ update_node() {
         npm update -g )
     fi
   elif have npm; then
-    log "npm globals"; run npm update -g
+    # pkg-managed npm (FreeBSD) has a root-owned prefix; os_install_agents installs into ~/.local.
+    log "npm globals"; run npm update -g --prefix "$HOME/.local"
   fi
 }
 
