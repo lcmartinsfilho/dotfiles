@@ -11,3 +11,4 @@ id_*
 .credentials.yaml
 ngrok.yml
 .config/nvim/lazy-lock.json
+.config/mimeapps.list
