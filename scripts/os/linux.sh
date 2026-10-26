@@ -71,13 +71,15 @@ os_install_notes() {
 update_firmware() {
   have fwupdmgr || return 0
   log "firmware"
-  # Exit status 2 means "nothing to do" for refresh/get-updates, so don't treat it as failure.
+  # Exit status 2 means "nothing to do" for refresh/update; any other failure is reported.
+  local rc=0
   run $SUDO fwupdmgr refresh --force || true
-  if [ "$DRY_RUN" = 1 ] || fwupdmgr get-updates >/dev/null 2>&1; then
-    run $SUDO fwupdmgr update
-  else
-    echo "no firmware updates"
-  fi
+  run $SUDO fwupdmgr update || rc=$?
+  case $rc in
+    0) ;;
+    2) echo "no firmware updates" ;;
+    *) warn "fwupdmgr update failed (exit $rc)" ;;
+  esac
 }
 
 update_flatpak() { if have flatpak; then log "flatpak"; run $SUDO flatpak update -y; fi; }
