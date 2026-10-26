@@ -9,7 +9,7 @@ pm_install() { run $SUDO dnf install -y "$@"; }
 # curl/wget/unzip/tar/gzip: mason downloads; wl-clipboard/xclip: clipboard=unnamedplus.
 os_install_base() {
   log "Installing base packages (dnf)"
-  pm_install git wget unzip tar gzip xz gcc gcc-c++ make zsh python3 python3-pip \
+  pm_install git wget unzip tar gzip xz gcc gcc-c++ make zsh util-linux-user python3 python3-pip \
     ripgrep fd-find pandoc wl-clipboard xclip fontconfig
   have curl || pm_install curl   # skip when curl-minimal is already there
 }

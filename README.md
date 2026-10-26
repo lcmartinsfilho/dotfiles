@@ -10,6 +10,8 @@ forces an OS; `--gui` also installs sway, waybar, wofi, rofi, alacritty and font
 
     ./install-deps.sh [--gui]
 
+It also makes zsh your login shell (log out and back in for it to apply).
+
 Update system packages, firmware and toolchains (the `upd` alias runs this):
 
     ./update.sh

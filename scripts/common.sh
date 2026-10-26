@@ -89,6 +89,27 @@ install_omz() {
   run omz_installer
 }
 
+# Make zsh the login shell: a console/SSH login only reads .zshrc when it is. Takes effect at the next login.
+login_shell() {
+  if have getent; then getent passwd "$USER" | cut -d: -f7
+  elif have dscl; then dscl . -read "/Users/$USER" UserShell | awk '{print $2}'
+  fi
+}
+ensure_login_shell() {
+  local zsh_path
+  zsh_path=$(command -v zsh) || { [ "$DRY_RUN" = 1 ] && zsh_path=/usr/bin/zsh || { warn "zsh not found; cannot set it as login shell"; return 0; }; }
+  case "$(login_shell)" in */zsh) return 0 ;; esac
+  log "Setting zsh as the login shell"
+  if [ -f /etc/shells ] && ! grep -qx "$zsh_path" /etc/shells; then
+    if [ "$DRY_RUN" = 1 ]; then printf '+ echo %s | %s tee -a /etc/shells\n' "$zsh_path" "${SUDO:-sudo}"
+    else echo "$zsh_path" | $SUDO tee -a /etc/shells >/dev/null || warn "could not add $zsh_path to /etc/shells"; fi
+  fi
+  if have chsh; then run chsh -s "$zsh_path" || warn "chsh failed; run: chsh -s $zsh_path"
+  elif have usermod; then run $SUDO usermod -s "$zsh_path" "$USER" || warn "usermod failed; run: sudo usermod -s $zsh_path $USER"
+  else warn "no chsh/usermod; set the login shell to $zsh_path manually"; fi
+  LOGIN_SHELL_CHANGED=1
+}
+
 # nvm + Node LTS (needed by mason: vtsls, eslint, prettier, js-debug-adapter).
 install_nvm_node() {
   if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
