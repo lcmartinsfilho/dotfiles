@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 git ls-files .config/nvim | while read -r f; do
   mkdir -p "$HOME/$(dirname "$f")"
-  [ "$(realpath -m "$HOME/$f")" = "$PWD/$f" ] && continue
+  [ "$(cd -P "$(dirname "$HOME/$f")" && pwd)/$(basename "$f")" = "$PWD/$f" ] && continue
   if [ -e "$HOME/$f" ] && [ ! -L "$HOME/$f" ]; then
     bak="$HOME/$f.bak"
     [ -e "$bak" ] && bak="$bak.$(date +%s)"

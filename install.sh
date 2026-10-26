@@ -2,10 +2,10 @@
 # Symlink every tracked dotfile into $HOME (backs up existing files as *.bak).
 set -euo pipefail
 cd "$(dirname "$0")"
-git ls-files | grep -vE '^(install.sh|install-nvim.sh|README.md|\.githooks/.*)$' | while read -r f; do
+git ls-files | grep -vE '^(install[a-z-]*\.sh|README.md|\.githooks/.*)$' | while read -r f; do
   mkdir -p "$HOME/$(dirname "$f")"
   # Already resolves to the repo file (e.g. ~/.config/sway is itself a symlink into the repo): leave it.
-  [ "$(realpath -m "$HOME/$f")" = "$PWD/$f" ] && continue
+  [ "$(cd -P "$(dirname "$HOME/$f")" && pwd)/$(basename "$f")" = "$PWD/$f" ] && continue
   if [ -e "$HOME/$f" ] && [ ! -L "$HOME/$f" ]; then
     bak="$HOME/$f.bak"
     [ -e "$bak" ] && bak="$bak.$(date +%s)"
