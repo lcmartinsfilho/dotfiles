@@ -1,4 +1,6 @@
 [Added Associations]
+application/pdf=okularApplication_pdf.desktop;xpdf.desktop;atril.desktop;
+application/xml=leafpad.desktop;featherpad.desktop;
 application/xhtml+xml=com.brave.Browser.desktop;
 image/jpeg=org.kde.gwenview.desktop;
 text/html=com.brave.Browser.desktop;
