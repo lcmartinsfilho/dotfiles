@@ -53,6 +53,7 @@ os_install_gui() {
   pkg_try sway swaybg swayidle swaylock waybar wofi rofi alacritty ptyxis \
     noto-sans-mono font-awesome plasma6-breeze-gtk kf6-breeze-icons
   install_nerd_symbols_font
+  install_jetbrains_nerd_font
 }
 
 os_install_notes() {

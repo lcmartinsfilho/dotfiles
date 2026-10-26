@@ -141,14 +141,17 @@ install_openspec() {
   fi
 }
 
-install_nerd_symbols_font() {
-  local dir="$HOME/.local/share/fonts/NerdFontsSymbolsOnly"
+install_nerd_font() {
+  local archive="$1" label="$2" dir="$HOME/.local/share/fonts/$1"
   [ -d "$dir" ] && return 0
   run mkdir -p "$dir"
-  run bash -c "curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz | tar -xJ -C '$dir'" \
-    || warn "could not install the Symbols Nerd Font"
+  run bash -c "curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$archive.tar.xz | tar -xJ -C '$dir'" \
+    || warn "could not install the $label"
   run fc-cache -f
 }
+
+install_nerd_symbols_font() { install_nerd_font NerdFontsSymbolsOnly "Symbols Nerd Font"; }
+install_jetbrains_nerd_font() { install_nerd_font JetBrainsMono "JetBrainsMono Nerd Font"; }
 
 # Updates for the toolchains that live outside the system package manager.
 update_rust() { if have rustup; then log "rustup"; run rustup update; fi; }

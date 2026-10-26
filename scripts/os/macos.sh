@@ -24,9 +24,9 @@ os_install_base() {
   run brew install git zsh neovim tree-sitter-cli eza fzf ripgrep fd pandoc gitleaks python wget
 
   # alacritty: terminal; iterm2: provides the cc-status script used by the Claude Code hooks;
-  # symbols-only nerd font: icons in nvim (mini.icons, blink.cmp).
+  # nerd fonts: symbols-only gives icons in nvim (mini.icons, blink.cmp); jetbrains is alacritty's font.
   log "Installing casks"
-  run brew install --cask alacritty iterm2 font-symbols-only-nerd-font
+  run brew install --cask alacritty iterm2 font-symbols-only-nerd-font font-jetbrains-mono-nerd-font
 
   # Claude Code hooks call ~/.config/iterm2/cc-status (a link into iTerm.app).
   local cc=/Applications/iTerm.app/Contents/Resources/utilities/cc-status

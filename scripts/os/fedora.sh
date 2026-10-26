@@ -19,6 +19,7 @@ os_install_gui() {
     google-noto-sans-mono-fonts fontawesome-fonts-all breeze-gtk breeze-icon-theme breeze-cursor-theme
   have rofi || pm_try rofi   # rofi-wayland was merged into rofi on newer Fedora
   install_nerd_symbols_font
+  install_jetbrains_nerd_font
 }
 
 os_update_system() {

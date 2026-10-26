@@ -18,6 +18,7 @@ os_install_gui() {
     fonts-noto-mono fonts-font-awesome breeze-gtk-theme breeze-icon-theme breeze-cursor-theme
   warn "ptyxis (wofi's term=) has no apt package; install it with flatpak or edit .config/wofi/config"
   install_nerd_symbols_font
+  install_jetbrains_nerd_font
 }
 
 os_update_system() {
