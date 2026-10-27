@@ -1,126 +1,130 @@
 {
-  "advisorModel" : "opus",
-  "agentPushNotifEnabled" : true,
-  "enabledPlugins" : {
-    "feature-dev@claude-plugins-official" : true,
-    "github@claude-plugins-official" : true,
-    "rust-analyzer-lsp@claude-plugins-official" : true
+  "advisorModel": "opus",
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "feature-dev@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
-  "hooks" : {
-    "Notification" : [
+  "hooks": {
+    "Notification": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "PermissionRequest" : [
+    "PermissionRequest": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "PostToolUse" : [
+    "PostToolUse": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "PreToolUse" : [
+    "PreToolUse": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "SessionEnd" : [
+    "SessionEnd": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "SessionStart" : [
+    "SessionStart": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "Stop" : [
+    "Stop": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "StopFailure" : [
+    "StopFailure": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "SubagentStop" : [
+    "SubagentStop": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ],
-    "UserPromptSubmit" : [
+    "UserPromptSubmit": [
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "codegraph prompt-hook",
-            "type" : "command"
+            "command": "codegraph prompt-hook",
+            "type": "command"
           }
         ]
       },
       {
-        "hooks" : [
+        "hooks": [
           {
-            "command" : "[ -x \"$HOME\/.config\/iterm2\/cc-status\" ] && \"$HOME\/.config\/iterm2\/cc-status\" || true",
-            "type" : "command"
+            "command": "[ -x \"$HOME/.config/iterm2/cc-status\" ] && \"$HOME/.config/iterm2/cc-status\" || true",
+            "type": "command"
           }
         ]
       }
     ]
   },
-  "model" : "sonnet",
-  "permissions" : {
-    "allow" : [
+  "model": "sonnet",
+  "permissions": {
+    "allow": [
       "mcp__codegraph__*"
     ]
   },
-  "tui" : "fullscreen"
+  "tui": "fullscreen",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
