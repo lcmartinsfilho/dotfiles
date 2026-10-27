@@ -12,7 +12,7 @@ pkg_try() { local p; for p in "$@"; do run $SUDO pkg install -y "$p" || MISSING+
 
 # bash: the scripts here; git/zsh/gmake: shell, lazy.nvim, telescope-fzf-native (cc is in base);
 # neovim >= 0.11; tree-sitter-cli: nvim-treesitter; eza/fzf: .zshrc; ripgrep/fd-find: telescope;
-# hs-pandoc: pandoc.nvim; gitleaks: pre-commit hook; node/npm: mason npm tools + codegraph;
+# hs-pandoc: pandoc.nvim; gitleaks: pre-commit hook; node/npm: mason npm tools;
 # python3: mason pypi/venv; openjdk21: ltex-ls-plus; wl-clipboard/xclip: clipboard=unnamedplus;
 # lua-language-server, stylua, ruff, llvm19 (clangd/clang-format), rust-analyzer: LSPs/formatters mason can't fetch here.
 os_install_base() {
@@ -44,7 +44,6 @@ os_install_agents() {
   log "Installing npm global tools"
   local npm="npm install -g --prefix $HOME/.local"
   have basedpyright-langserver || run $npm basedpyright
-  have codegraph               || run $npm @colbymchenry/codegraph
   have openspec                || run $npm @fission-ai/openspec@latest
 }
 
@@ -63,8 +62,11 @@ os_update_system() {
   log "pkg"
   run $SUDO pkg update
   run $SUDO pkg upgrade -y
-  log "base system"
-  run $SUDO freebsd-update fetch install || true
+  # Packaged base (pkgbase) is upgraded by `pkg upgrade` above; freebsd-update refuses to run there.
+  if ! pkg info -e FreeBSD-runtime; then
+    log "base system"
+    run $SUDO freebsd-update fetch install || true
+  fi
 }
 
 os_cleanup() {
