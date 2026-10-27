@@ -10,7 +10,7 @@ pm_install() { run $SUDO dnf install -y "$@"; }
 os_install_base() {
   log "Installing base packages (dnf)"
   pm_install git wget unzip tar gzip xz gcc gcc-c++ make zsh util-linux-user python3 python3-pip \
-    ripgrep fd-find pandoc wl-clipboard xclip fontconfig
+    ripgrep fd-find pandoc wl-clipboard xclip fontconfig tmux
   have curl || pm_install curl   # skip when curl-minimal is already there
 }
 

@@ -9,7 +9,7 @@ os_install_base() {
   log "Installing base packages (apt)"
   run $SUDO apt-get update
   pm_install ca-certificates git curl wget unzip tar gzip xz-utils build-essential make zsh \
-    python3 python3-venv python3-pip ripgrep fd-find pandoc wl-clipboard xclip fontconfig
+    python3 python3-venv python3-pip ripgrep fd-find pandoc wl-clipboard xclip fontconfig tmux
   if have fdfind && ! have fd; then run ln -sfn "$(command -v fdfind)" "$BIN/fd"; fi   # Debian renames the binary
 }
 

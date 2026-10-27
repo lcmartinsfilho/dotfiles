@@ -21,7 +21,7 @@ os_install_prepare() {
 # python: mason's pypi packages (ruff, debugpy, basedpyright); wget: mason downloads.
 os_install_base() {
   log "Installing formulae"
-  run brew install git zsh neovim tree-sitter-cli eza fzf ripgrep fd pandoc gitleaks python wget
+  run brew install git zsh neovim tmux tree-sitter-cli eza fzf ripgrep fd pandoc gitleaks python wget
 
   # alacritty: terminal; iterm2: provides the cc-status script used by the Claude Code hooks;
   # nerd fonts: symbols-only gives icons in nvim (mini.icons, blink.cmp); jetbrains is alacritty's font.

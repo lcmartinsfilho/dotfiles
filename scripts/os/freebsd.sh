@@ -17,7 +17,7 @@ pkg_try() { local p; for p in "$@"; do run $SUDO pkg install -y "$p" || MISSING+
 # lua-language-server, stylua, ruff, llvm19 (clangd/clang-format), rust-analyzer: LSPs/formatters mason can't fetch here.
 os_install_base() {
   log "Installing packages"
-  run $SUDO pkg install -y bash git curl wget unzip gmake zsh neovim tree-sitter-cli eza fzf ripgrep fd-find \
+  run $SUDO pkg install -y bash git curl wget unzip gmake zsh tmux neovim tree-sitter-cli eza fzf ripgrep fd-find \
     hs-pandoc gitleaks node npm python3 openjdk21 wl-clipboard xclip \
     lua-language-server stylua ruff py312-debugpy llvm19 rustup-init
 }
