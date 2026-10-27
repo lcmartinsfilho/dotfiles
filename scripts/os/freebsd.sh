@@ -12,7 +12,7 @@ pkg_try() { local p; for p in "$@"; do run $SUDO pkg install -y "$p" || MISSING+
 
 # bash: the scripts here; git/zsh/gmake: shell, lazy.nvim, telescope-fzf-native (cc is in base);
 # neovim >= 0.11; tree-sitter-cli: nvim-treesitter; eza/fzf: .zshrc; ripgrep/fd-find: telescope;
-# hs-pandoc: pandoc.nvim; gitleaks: pre-commit hook; node/npm: mason npm tools + claude/codegraph;
+# hs-pandoc: pandoc.nvim; gitleaks: pre-commit hook; node/npm: mason npm tools + codegraph;
 # python3: mason pypi/venv; openjdk21: ltex-ls-plus; wl-clipboard/xclip: clipboard=unnamedplus;
 # lua-language-server, stylua, ruff, llvm19 (clangd/clang-format), rust-analyzer: LSPs/formatters mason can't fetch here.
 os_install_base() {
@@ -46,7 +46,6 @@ os_install_agents() {
   have basedpyright-langserver || run $npm basedpyright
   have codegraph               || run $npm @colbymchenry/codegraph
   have openspec                || run $npm @fission-ai/openspec@latest
-  have claude                  || run $npm @anthropic-ai/claude-code || warn "Claude Code could not be installed via npm on FreeBSD"
 }
 
 os_install_gui() {
