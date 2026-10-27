@@ -44,7 +44,6 @@ load_os() {
 # Pick the privilege escalation tool and, for sudo, ask for the password once and keep it alive.
 setup_sudo() {
   if [ "$(id -u)" = 0 ]; then SUDO=""
-  elif [ "$OS" = freebsd ] && have doas; then SUDO=doas
   elif have sudo; then SUDO=sudo
   elif have doas; then SUDO=doas
   elif [ "$DRY_RUN" = 1 ]; then SUDO=sudo
