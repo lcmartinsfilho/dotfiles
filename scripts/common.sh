@@ -3,6 +3,7 @@
 
 DRY_RUN=${DRY_RUN:-0}
 GUI=${GUI:-0}
+INSTALL_CLAUDE=${INSTALL_CLAUDE:-ask}   # ask | yes | no (install-deps.sh --claude / --no-claude)
 BIN="$HOME/.local/bin"
 NVM_VERSION=v0.40.3
 MISSING=()
@@ -128,6 +129,17 @@ install_codegraph() {
   else
     warn "npm not on PATH yet; open a new shell and run: npm install -g @colbymchenry/codegraph"
   fi
+}
+
+# Whether to install Claude Code: never when it is already there; otherwise ask (default no),
+# unless --claude / --no-claude decided it. Without a terminal to ask on, skip it.
+claude_wanted() {
+  have claude && return 1
+  case $INSTALL_CLAUDE in yes) return 0 ;; no) return 1 ;; esac
+  if [ ! -t 0 ]; then warn "not asking about Claude Code (no terminal); pass --claude to install it"; return 1; fi
+  local a
+  read -r -p "Install Claude Code? [y/N] " a || return 1
+  case $a in [Yy]*) return 0 ;; *) return 1 ;; esac
 }
 
 # OpenSpec CLI (spec-driven workflow); `openspec init` in a project sets up its Claude Code commands.

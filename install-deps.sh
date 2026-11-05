@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Install the tools these dotfiles depend on for the current OS (Fedora, Ubuntu/Debian, macOS, FreeBSD). Safe to re-run.
-# Usage: ./install-deps.sh [--gui]      (DRY_RUN=1 only prints the commands; DOTFILES_OS=<os> forces the OS)
+# Usage: ./install-deps.sh [--gui] [--claude|--no-claude]      (DRY_RUN=1 only prints the commands; DOTFILES_OS=<os> forces the OS)
 #   --gui  also install sway, waybar, wofi, rofi, alacritty, fonts and the Breeze GTK theme (not on macOS)
+#   --claude / --no-claude  install Claude Code without asking / skip it (default: ask; no terminal = skip)
 # Then run ./install.sh to symlink the dotfiles. Per-OS steps live in scripts/os/<os>.sh;
 # steps shared by every OS live in scripts/common.sh. LSPs/formatters/debuggers are installed
 # by mason on the first nvim launch (on FreeBSD, which has no mason binaries, from pkg/npm instead).
@@ -14,7 +15,9 @@ DOTFILES_DIR=$(cd -P "$(dirname "$0")" && pwd)
 for a in "$@"; do
   case $a in
     --gui) GUI=1 ;;
-    -h|--help) sed -n '2,7p' "$0"; exit 0 ;;
+    --claude) INSTALL_CLAUDE=yes ;;
+    --no-claude) INSTALL_CLAUDE=no ;;
+    -h|--help) sed -n '2,8p' "$0"; exit 0 ;;
     *) die "unknown option: $a" ;;
   esac
 done

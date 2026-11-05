@@ -68,7 +68,7 @@ os_install_tools() {
 
 # Claude Code + CodeGraph CLI.
 os_install_agents() {
-  have claude || run bash -c "curl -fsSL https://claude.ai/install.sh | bash"
+  if claude_wanted; then run bash -c "curl -fsSL https://claude.ai/install.sh | bash"; fi
   install_codegraph
   install_openspec
 }
