@@ -12,6 +12,18 @@ return {
     },
   },
 
+  -- Rust: rust-analyzer comes from rustup (not mason); run clippy instead of cargo check on save
+  {
+    "mrcjkb/rustaceanvim",
+    opts = {
+      server = {
+        default_settings = {
+          ["rust-analyzer"] = { check = { command = "clippy" } },
+        },
+      },
+    },
+  },
+
   -- Prose: LanguageTool (EN + pt-BR) and pandoc
   {
     "neovim/nvim-lspconfig",
