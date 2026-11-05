@@ -16,8 +16,8 @@ os_install_prepare() {
   [ "$DRY_RUN" = 1 ] || have brew || die "brew not found after install"
 }
 
-# git/zsh: shell + lazy.nvim; neovim >= 0.11 (vim.lsp.config); tree-sitter-cli: nvim-treesitter (main branch);
-# eza/fzf: aliases + `fzf --zsh` in .zshrc; ripgrep/fd: telescope; pandoc: pandoc.nvim; gitleaks: pre-commit hook;
+# git/zsh: shell + lazy.nvim; neovim >= 0.11.2 (LazyVim); tree-sitter-cli: nvim-treesitter (main branch);
+# eza/fzf: aliases + `fzf --zsh` in .zshrc; ripgrep/fd: snacks picker (LazyVim); pandoc: pandoc.nvim; gitleaks: pre-commit hook;
 # python: mason's pypi packages (ruff, debugpy, basedpyright); wget: mason downloads.
 os_install_base() {
   log "Installing formulae"

@@ -7,6 +7,9 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Must be set before the python extra is parsed (it reads these at import time).
+vim.g.lazyvim_python_lsp = "basedpyright"
+
 require("lazy").setup({
   spec = {
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },

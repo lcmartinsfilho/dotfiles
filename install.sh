@@ -20,3 +20,8 @@ ln -sfn "$PWD/.config/alacritty/platform-$os.toml" "$HOME/.config/alacritty/plat
 
 # Enable the secret-scanning pre-commit hook.
 git config core.hooksPath .githooks
+
+# Drop neovim links that point into this repo but whose target was deleted (e.g. removed plugin specs).
+if [ -d "$HOME/.config/nvim" ]; then
+  find "$HOME/.config/nvim" -type l ! -exec test -e {} \; -lname "$PWD/*" -delete
+fi

@@ -1,7 +1,7 @@
 # Shared by fedora.sh and ubuntu.sh. The distro file must define PM_HAS_TREE_SITTER and
 # pm_install() before sourcing this.
 
-NVIM_MIN=0.11          # vim.lsp.config / vim.uv
+NVIM_MIN=0.11.2        # LazyVim requirement (also vim.lsp.config / vim.uv)
 FZF_MIN=0.48           # `fzf --zsh`
 GITLEAKS_VERSION=8.30.1
 
@@ -19,7 +19,7 @@ os_install_prepare() {
 }
 
 os_install_tools() {
-  # Neovim >= 0.11 (distro packages are often too old, e.g. Ubuntu 22.04).
+  # Neovim >= $NVIM_MIN (distro packages are often too old, e.g. Ubuntu 22.04).
   local v nvim_ok=0 fzf_ok=0
   if have nvim; then
     v=$(nvim --version | sed -n '1s/^NVIM v//p'); v=${v%%-*}

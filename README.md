@@ -1,6 +1,6 @@
 # dotfiles
 
-Shell, sway/waybar/wofi, alacritty, tmux, htop, neovim and Claude Code config.
+Shell, sway/waybar/wofi, alacritty, tmux, htop, neovim (LazyVim) and Claude Code config.
 
     git clone <repo> ~/dotfiles && ~/dotfiles/install.sh
 
@@ -20,8 +20,11 @@ Per-OS steps live in `scripts/os/<os>.sh`, shared helpers and steps in `scripts/
 To support another OS, add `scripts/os/<os>.sh` defining the `os_*` hooks it needs
 (see `fedora.sh`) and teach `detect_os` in `scripts/common.sh` about it.
 
+Neovim runs on [LazyVim](https://www.lazyvim.org) (needs Neovim >= 0.11.2): `.config/nvim` enables a few
+LazyVim extras (`lua/config/lazy.lua`) and keeps personal overrides in `lua/plugins/user.lua`.
 LSPs, formatters and debug adapters are installed by mason on the first nvim launch
-(everywhere except FreeBSD, where the script installs them from pkg/npm).
+(everywhere except FreeBSD, where the script installs them from pkg/npm and `user.lua` marks
+those servers `mason = false`). `update.sh` syncs plugins and mason packages via `scripts/nvim-sync.lua`.
 
 Secrets live in untracked `~/.secrets` (sourced by `.zshrc`), e.g.:
 

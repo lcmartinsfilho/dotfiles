@@ -4,8 +4,8 @@ pm_install() { run $SUDO dnf install -y "$@"; }
 # shellcheck disable=SC1091
 . "$DOTFILES_DIR/scripts/os/linux.sh"
 
-# git/zsh: shell + lazy.nvim; compiler+make: treesitter parsers + telescope-fzf-native;
-# ripgrep/fd: telescope; pandoc: pandoc.nvim; python3: mason pypi packages;
+# git/zsh: shell + lazy.nvim; compiler+make: treesitter parsers;
+# ripgrep/fd: snacks picker (LazyVim); pandoc: pandoc.nvim; python3: mason pypi packages;
 # curl/wget/unzip/tar/gzip: mason downloads; wl-clipboard/xclip: clipboard=unnamedplus.
 os_install_base() {
   log "Installing base packages (dnf)"

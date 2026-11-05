@@ -187,6 +187,6 @@ update_dev_tools() {
   if have codegraph; then log "codegraph"; run codegraph upgrade; fi
   if have nvim; then
     log "nvim plugins + mason tools"
-    run nvim --headless "+Lazy! sync" "+MasonUpdate" "+MasonToolsUpdateSync" +qa
+    run nvim --headless "+Lazy! sync" "+luafile $DOTFILES_DIR/scripts/nvim-sync.lua" +qa
   fi
 }

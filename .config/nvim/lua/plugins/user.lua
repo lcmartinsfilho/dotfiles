@@ -15,6 +15,18 @@ return {
   -- Prose: LanguageTool (EN + pt-BR) and pandoc
   {
     "neovim/nvim-lspconfig",
+    opts = function(_, opts)
+      -- FreeBSD: mason has no binaries, so these servers come from pkg(8)/npm on PATH.
+      -- mason = false makes LazyVim enable them without asking mason to install them.
+      if is_bsd then
+        for _, name in ipairs({ "basedpyright", "ruff", "clangd", "lua_ls", "ltex_plus" }) do
+          opts.servers[name] = vim.tbl_deep_extend("force", opts.servers[name] or {}, { mason = false })
+        end
+      end
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
     opts = {
       servers = {
         ltex_plus = {
@@ -34,7 +46,7 @@ return {
     config = function() require("pandoc").setup() end,
   },
 
-  -- Mason: FreeBSD only gets the npm-based tools
+  -- Mason: FreeBSD only gets the npm-based tools (the rest comes from pkg, see scripts/os/freebsd.sh)
   {
     "mason-org/mason.nvim",
     opts = function(_, opts)

@@ -1,6 +1,6 @@
 # FreeBSD. Hooks used by update.sh and install-deps.sh.
 # Mason has no FreeBSD binaries, so LSPs and formatters come from pkg(8) or npm here
-# (lsp.lua only asks mason for the npm-based tools on FreeBSD). codelldb has no FreeBSD build,
+# (user.lua only asks mason for the npm-based tools on FreeBSD). codelldb has no FreeBSD build,
 # so C/C++/Rust debugging through nvim-dap is unavailable.
 LTEX_VERSION=18.7.0
 RUSTUP_INIT=rustup-init
@@ -10,8 +10,8 @@ os_setup() { setup_sudo; }
 
 pkg_try() { local p; for p in "$@"; do run $SUDO pkg install -y "$p" || MISSING+=("$p"); done; }
 
-# bash: the scripts here; git/zsh/gmake: shell, lazy.nvim, telescope-fzf-native (cc is in base);
-# neovim >= 0.11; tree-sitter-cli: nvim-treesitter; eza/fzf: .zshrc; ripgrep/fd-find: telescope;
+# bash: the scripts here; git/zsh/gmake: shell, lazy.nvim, treesitter parsers (cc is in base);
+# neovim >= 0.11.2 (LazyVim); tree-sitter-cli: nvim-treesitter; eza/fzf: .zshrc; ripgrep/fd-find: snacks picker (LazyVim);
 # hs-pandoc: pandoc.nvim; gitleaks: pre-commit hook; node/npm: mason npm tools;
 # python3: mason pypi/venv; openjdk21: ltex-ls-plus; wl-clipboard/xclip: clipboard=unnamedplus;
 # lua-language-server, stylua, ruff, llvm19 (clangd/clang-format), rust-analyzer: LSPs/formatters mason can't fetch here.
@@ -30,7 +30,7 @@ os_install_tools() {
     [ -n "$p" ] && run ln -sfn "$p" "$BIN/$t"
   done
 
-  # ltex-ls-plus: generic tarball (needs Java; lsp.lua points JAVA_HOME at /usr/local/openjdk21).
+  # ltex-ls-plus: generic tarball (needs Java; lua/plugins/user.lua points JAVA_HOME at /usr/local/openjdk21).
   if [ ! -x "$BIN/ltex-ls-plus" ]; then
     log "Installing ltex-ls-plus $LTEX_VERSION"
     run bash -c "curl -fsSL https://github.com/ltex-plus/ltex-ls-plus/releases/download/$LTEX_VERSION/ltex-ls-plus-$LTEX_VERSION.tar.gz | tar -xz -C '$HOME/.local/opt'"
