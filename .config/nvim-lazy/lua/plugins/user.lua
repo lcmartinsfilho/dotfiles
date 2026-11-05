@@ -1,0 +1,46 @@
+local is_bsd = vim.uv.os_uname().sysname == "FreeBSD"
+
+return {
+  -- Oil alongside the snacks explorer
+  {
+    "stevearc/oil.nvim",
+    lazy = false,
+    keys = { { "-", "<cmd>Oil<cr>", desc = "Open parent directory" } },
+    opts = {
+      view_options = { show_hidden = true },
+      keymaps = { ["q"] = "actions.close" },
+    },
+  },
+
+  -- Prose: LanguageTool (EN + pt-BR) and pandoc
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        ltex_plus = {
+          filetypes = { "markdown", "text", "tex", "gitcommit", "rst" },
+          cmd_env = { JAVA_HOME = is_bsd and "/usr/local/openjdk21" or "" },
+          settings = {
+            ltex = { language = "auto", additionalRules = { enablePickyRules = false } },
+          },
+        },
+      },
+    },
+  },
+  {
+    "aspeddro/pandoc.nvim",
+    ft = { "markdown", "text", "tex", "rst" },
+    cmd = "Pandoc",
+    config = function() require("pandoc").setup() end,
+  },
+
+  -- Mason: FreeBSD only gets the npm-based tools
+  {
+    "mason-org/mason.nvim",
+    opts = function(_, opts)
+      if is_bsd then
+        opts.ensure_installed = { "vtsls", "eslint-lsp", "prettier", "js-debug-adapter" }
+      end
+    end,
+  },
+}
