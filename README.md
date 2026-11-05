@@ -12,7 +12,7 @@ forces an OS; `--gui` also installs sway, waybar, wofi, rofi, alacritty and font
 
 It also makes zsh your login shell (log out and back in for it to apply).
 
-Update system packages, firmware and toolchains (the `upd` alias runs this):
+Update system packages, firmware and toolchains (the `upd` / `update` aliases run this):
 
     ./update.sh
 

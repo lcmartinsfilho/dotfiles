@@ -122,7 +122,65 @@ export NVM_DIR="$HOME/.nvm"
 
 # System update (picks the right script for this OS)
 alias upd="~/dotfiles/update.sh"
+alias update="~/dotfiles/update.sh"
 
 # Keep secrets out of shell history (leading space = not recorded)
 setopt HIST_IGNORE_SPACE
 HISTORY_IGNORE="*(KEY|TOKEN|SECRET|PASSWORD)*=*"
+
+# ---- Aliases ----
+# Navegação / arquivos
+alias ..="cd .."
+alias ...="cd ../.."
+alias lt="eza --tree --level=2"
+alias ff='fd | fzf'
+alias dotfiles="cd ~/dotfiles"
+alias zshrc="nvim ~/dotfiles/.zshrc"
+alias reload="source ~/.zshrc"
+
+# Git (o plugin git do oh-my-zsh já traz gl=pull, gf=fetch, gfa=fetch --all --prune,
+# gup=pull --rebase, gp=push, gpf=push --force-with-lease, gst, gsw, gsta, ...)
+alias lg="lazygit"
+alias gsync="git fetch --all --prune && git pull --rebase --autostash"
+alias gclean="git branch --merged | grep -vE '^\*|main|master|develop' | xargs -r git branch -d"
+alias ghpr="gh pr create --fill"
+alias ghprs="gh pr list"
+alias ghv="gh repo view --web"
+
+# tmux
+alias ta="tmux attach -t"
+alias tn="tmux new -s"
+alias tl="tmux ls"
+
+# Rust
+alias cb="cargo build"
+alias cr="cargo run"
+alias ct="cargo nextest run"
+alias cc="cargo clippy --all-targets -- -D warnings"
+alias cw="cargo watch -x check"
+
+# Node: detecta o gerenciador pelo lockfile (pnpm > yarn > npm)
+_pm() {
+  local d=$PWD
+  while [[ $d != / ]]; do
+    [[ -f $d/pnpm-lock.yaml ]] && { echo pnpm; return; }
+    [[ -f $d/yarn.lock ]] && { echo yarn; return; }
+    [[ -f $d/package-lock.json ]] && { echo npm; return; }
+    d=${d:h}
+  done
+  echo npm
+}
+ni() { $(_pm) install "$@"; }                    # install
+na() { $(_pm) add "$@"; }                      # add dep (npm add = install)
+nr() { $(_pm) run "$@"; }                        # run script
+nd() { $(_pm) run dev "$@"; }
+nb() { $(_pm) run build "$@"; }
+nt() { $(_pm) run test "$@"; }
+nl() { $(_pm) run lint "$@"; }
+alias pn="pnpm"
+alias y="yarn"
+
+# Sistema
+alias ports="lsof -iTCP -sTCP:LISTEN -n -P"
+alias myip="curl -s ifconfig.me"
+alias path='echo $PATH | tr ":" "\n"'
