@@ -12,8 +12,8 @@ pm_try() { local p; for p in "$@"; do pm_install "$p" || MISSING+=("$p"); done; 
 
 os_install_prepare() {
   case $(uname -m) in
-    x86_64)        NVIM_ASSET=nvim-linux-x86_64; GL_ARCH=x64 ;;
-    aarch64|arm64) NVIM_ASSET=nvim-linux-arm64;  GL_ARCH=arm64 ;;
+    x86_64)        NVIM_ASSET=nvim-linux-x86_64; GL_ARCH=x64;   LG_ARCH=x86_64 ;;
+    aarch64|arm64) NVIM_ASSET=nvim-linux-arm64;  GL_ARCH=arm64; LG_ARCH=arm64 ;;
     *) die "Unsupported architecture: $(uname -m)" ;;
   esac
 }
@@ -48,6 +48,15 @@ os_install_tools() {
     # The prebuilt upstream binaries need a newer glibc than Ubuntu 22.04 has, so build from source.
     { [ "${PM_HAS_TREE_SITTER:-0}" = 1 ] && pm_install tree-sitter-cli; } \
       || { log "Building tree-sitter-cli with cargo (takes a few minutes)"; run cargo install --locked tree-sitter-cli; }
+  fi
+
+  # lazygit (LazyVim's <leader>gg): distro package if any, else the upstream release tarball.
+  if ! have lazygit; then
+    pm_install lazygit || {
+      log "Installing lazygit from upstream"
+      run bash -c "v=\$(curl -fsSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest | sed -n 's/.*\"tag_name\": *\"v\([^\"]*\)\".*/\1/p') \
+        && curl -fsSL \"https://github.com/jesseduffield/lazygit/releases/download/v\$v/lazygit_\${v}_Linux_$LG_ARCH.tar.gz\" | tar -xz -C '$BIN' lazygit"
+    }
   fi
 
   # gitleaks (pre-commit hook).
