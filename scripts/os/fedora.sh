@@ -22,6 +22,16 @@ os_install_gui() {
   install_jetbrains_nerd_font
 }
 
+# Niri session + the pieces it needs (bar, launcher, notifications, polkit agent, idle/lock, wallpaper).
+# Used by install-niri.sh only; Niri is not installed on every machine.
+os_install_niri() {
+  pm_try niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring \
+    waybar wofi mako mate-polkit swaybg swayidle swaylock alacritty nautilus \
+    brightnessctl playerctl wl-clipboard grim slurp pipewire wireplumber pavucontrol
+  install_nerd_symbols_font
+  install_jetbrains_nerd_font
+}
+
 os_update_system() {
   log "dnf"
   run $SUDO dnf upgrade -y

@@ -12,6 +12,14 @@ forces an OS; `--gui` also installs sway, waybar, wofi, rofi, alacritty and font
 
 It also makes zsh your login shell (log out and back in for it to apply).
 
+[Niri](https://github.com/YaLTeR/niri) is optional and kept separate (its config lives in `.config/niri/`,
+which `install.sh` skips). Install it, its dependencies (waybar, wofi, mako, polkit agent, ...) and
+link its config with:
+
+    ./install-niri.sh [--deps-only|--links-only]      # Fedora only for now
+
+Niri starts its own waybar (`.config/niri/waybar.jsonc`) and mako, so the sway setup is unaffected.
+
 Update system packages, firmware and toolchains (the `upd` / `update` aliases run this):
 
     ./update.sh
