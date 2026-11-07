@@ -77,7 +77,7 @@ binds {
 
     // Apps
     Mod+Return { spawn "alacritty"; }
-    Mod+D { spawn "wofi" "--show" "drun"; }
+    Mod+D { spawn "rofi" "-terminal" "alacritty" "-show" "combi" "-combi-modes" "drun#run" "-modes" "combi"; }
     Mod+Alt+L { spawn "swaylock" "-f" "-c" "000000"; }
     Mod+E { spawn "nautilus"; }
 
