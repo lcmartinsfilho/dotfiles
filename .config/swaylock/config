@@ -1,0 +1,2 @@
+# Overrides /etc/swaylock/config, which sets a default wallpaper image.
+color=000000
