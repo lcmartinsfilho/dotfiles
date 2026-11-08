@@ -25,7 +25,7 @@ input {
 
 // Run `niri msg outputs` to list outputs.
 output "eDP-1" {
-    scale 1
+    scale 1.25
 }
 
 layout {
