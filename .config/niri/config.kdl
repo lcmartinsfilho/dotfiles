@@ -56,7 +56,7 @@ hotkey-overlay {
 spawn-sh-at-startup "waybar -c ~/.config/niri/waybar.jsonc"
 spawn-sh-at-startup "mako --config ~/.config/niri/mako"
 spawn-at-startup "/usr/libexec/polkit-mate-authentication-agent-1"
-spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpaper/wallpaper.jpg -m fill"
+spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpaper/roberto-shumski-oYEGPZebzGw-unsplash.jpg -m fill"
 spawn-at-startup "swayidle" "-w" \
     "timeout" "300" "swaylock -f -c 000000" \
     "timeout" "600" "niri msg action power-off-monitors" \
