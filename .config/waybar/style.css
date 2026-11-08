@@ -1,5 +1,24 @@
+/* Catppuccin Mocha */
+@define-color base     #1e1e2e;
+@define-color mantle   #181825;
+@define-color crust    #11111b;
+@define-color text     #cdd6f4;
+@define-color subtext0 #a6adc8;
+@define-color overlay0 #6c7086;
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color blue     #89b4fa;
+@define-color lavender #b4befe;
+@define-color sapphire #74c7ec;
+@define-color teal     #94e2d5;
+@define-color green    #a6e3a1;
+@define-color yellow   #f9e2af;
+@define-color peach    #fab387;
+@define-color red      #f38ba8;
+@define-color mauve    #cba6f7;
+
 * {
-    font-family: 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
+    font-family: 'JetBrainsMono Nerd Font', 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
     font-size: 13px;
     border: none;
     border-radius: 0;
@@ -8,42 +27,51 @@
 }
 
 window#waybar {
-    background-color: #1a1b23;
-    color: #a9acb8;
+    background-color: @mantle;
+    color: @text;
 }
 
-button {
-    box-shadow: none;
-}
-
+button,
 button:hover {
-    background: inherit;
     box-shadow: none;
 }
 
+/* Workspaces: foco com sublinhado lavender */
 #workspaces button {
-    padding: 0 6px;
+    padding: 0 8px;
     background-color: transparent;
-    color: #6b6e7c;
+    color: @overlay0;
+    border-bottom: 2px solid transparent;
 }
 
 #workspaces button:hover {
-    background: transparent;
-    color: #f8f8f2;
+    background: @surface0;
+    color: @text;
 }
 
-#workspaces button.focused, #workspaces button.active {
-    background-color: transparent;
-    color: #f8f8f2;
+#workspaces button.focused,
+#workspaces button.active {
+    color: @lavender;
+    background-color: @base;
+    border-bottom: 2px solid @lavender;
 }
 
 #workspaces button.urgent {
-    background-color: transparent;
-    color: #f8f8f2;
-    text-decoration: underline;
+    color: @crust;
+    background-color: @red;
 }
 
-#mode,
+#mode {
+    padding: 0 10px;
+    color: @crust;
+    background-color: @peach;
+}
+
+#window {
+    color: @subtext0;
+}
+
+/* Módulos: cada um com sua cor de acento */
 #clock,
 #battery,
 #cpu,
@@ -64,8 +92,22 @@ button:hover {
 #keyboard-state {
     padding: 0 10px;
     background-color: transparent;
-    color: #a9acb8;
+    color: @text;
 }
+
+#clock          { color: @lavender; }
+#cpu            { color: @sapphire; }
+#memory         { color: @mauve; }
+#temperature    { color: @peach; }
+#backlight      { color: @yellow; }
+#network        { color: @teal; }
+#pulseaudio,
+#wireplumber    { color: @blue; }
+#battery        { color: @green; }
+#language       { color: @subtext0; }
+#idle_inhibitor { color: @overlay0; }
+#idle_inhibitor.activated { color: @yellow; }
+#scratchpad     { color: @mauve; }
 
 #window,
 #workspaces {
@@ -80,23 +122,30 @@ button:hover {
     margin-right: 0;
 }
 
+/* Estados */
+#battery.warning:not(.charging) { color: @peach; }
+#battery.charging,
+#battery.plugged                { color: @green; }
+
 #network.disconnected,
 #pulseaudio.muted,
-#wireplumber.muted,
+#wireplumber.muted {
+    color: @overlay0;
+}
+
 #temperature.critical {
-    color: #f8f8f2;
-    text-decoration: underline;
+    color: @red;
 }
 
 @keyframes blink {
     to {
-        background-color: #f8f8f2;
-        color: #1a1b23;
+        background-color: @red;
+        color: @crust;
     }
 }
 
 #battery.critical:not(.charging) {
-    color: #f8f8f2;
+    color: @red;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);
@@ -112,11 +161,21 @@ button:hover {
     -gtk-icon-effect: highlight;
 }
 
+tooltip {
+    background-color: @base;
+    border: 1px solid @surface1;
+    border-radius: 6px;
+}
+
+tooltip label {
+    color: @text;
+}
+
 #privacy {
     padding: 0;
 }
 
 #privacy-item {
     padding: 0 5px;
-    color: #a9acb8;
+    color: @text;
 }
