@@ -39,6 +39,20 @@ input {
         numlock
     }
 
+    // Same pointer acceleration as GNOME (libinput adaptive profile).
+    mouse {
+        accel-profile "adaptive"
+        accel-speed 0.0
+        natural-scroll
+    }
+
+    touchpad {
+        accel-profile "adaptive"
+        accel-speed 0.504
+        natural-scroll
+        dwt
+    }
+
     trackpoint {
         // off
         // natural-scroll
