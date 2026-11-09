@@ -48,6 +48,9 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 # Toggle waybar
 bindsym $mod+z exec pkill -SIGUSR1 waybar
 
+# Lock screen
+bindsym $mod+Escape exec loginctl lock-session
+
 # Borders: no titlebars on tiled windows
 default_border pixel 2
 default_floating_border normal
