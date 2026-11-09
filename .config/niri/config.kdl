@@ -48,7 +48,7 @@ input {
 
     touchpad {
         accel-profile "adaptive"
-        accel-speed 0.504
+        accel-speed 0.8
         natural-scroll
         dwt
     }
