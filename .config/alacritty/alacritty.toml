@@ -1,7 +1,7 @@
 [general]
 import = [
   "~/.config/alacritty/platform.toml",
-  "~/.config/alacritty/dank-theme.toml"
+  "~/.config/alacritty/monokai-theme.toml"
 ]
 
 [window]
