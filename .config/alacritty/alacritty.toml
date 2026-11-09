@@ -5,7 +5,7 @@ import = [
 ]
 
 [window]
-opacity = 0.9
+opacity = 1.0
 decorations = "Full"
 decorations_theme_variant = "Dark"
 padding = { x = 6, y = 0 }
