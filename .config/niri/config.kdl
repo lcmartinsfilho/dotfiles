@@ -39,10 +39,10 @@ input {
         numlock
     }
 
-    // Same pointer acceleration as GNOME (libinput adaptive profile).
+    // Same libinput adaptive profile as GNOME, with a bit more speed (0.0 felt slower).
     mouse {
         accel-profile "adaptive"
-        accel-speed 0.0
+        accel-speed 0.3
         natural-scroll
     }
 
