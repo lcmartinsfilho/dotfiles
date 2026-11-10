@@ -51,6 +51,11 @@ bindsym $mod+z exec pkill -SIGUSR1 waybar
 # Lock screen
 bindsym $mod+Escape exec loginctl lock-session
 
+# Screenshots to clipboard (Print keys from the system config save to ~/Pictures)
+bindsym $mod+Shift+s exec grimshot copy area
+bindsym $mod+Shift+Print exec grimshot copy output
+bindsym $mod+Ctrl+s exec grimshot savecopy area
+
 # Borders: no titlebars on tiled windows
 default_border pixel 2
 default_floating_border normal
