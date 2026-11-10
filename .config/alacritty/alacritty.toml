@@ -4,6 +4,11 @@ import = [
   "~/.config/alacritty/monokai-theme.toml"
 ]
 
+[terminal.shell]
+# Prefer zsh when installed, otherwise fall back to the user's default shell
+program = "/bin/sh"
+args = ["-c", "if command -v zsh >/dev/null 2>&1; then exec zsh; else exec \"${SHELL:-/bin/sh}\"; fi"]
+
 [window]
 opacity = 1.0
 decorations = "Full"
