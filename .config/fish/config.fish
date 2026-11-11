@@ -7,7 +7,17 @@ set -g fish_greeting
 command -q fzf; and fzf --fish | source
 
 # fnm: per-project Node versions (.nvmrc / .node-version)
-command -q fnm; and fnm env --use-on-cd --shell fish | source
+if command -q fnm
+    fnm env --use-on-cd --shell fish | source
+    # Same hook as fnm's, plus --install-if-missing: download the version on first visit.
+    function _fnm_autoload_hook --on-variable PWD --description 'Change Node version on directory change'
+        status --is-command-substitution; and return
+        if test -f .node-version -o -f .nvmrc -o -f package.json
+            fnm use --install-if-missing --silent-if-unchanged
+        end
+    end
+    _fnm_autoload_hook
+end
 
 # ---- Abbreviations (expand as you type) ----
 abbr -a v nvim
