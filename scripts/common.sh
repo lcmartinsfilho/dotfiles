@@ -201,3 +201,68 @@ update_dev_tools() {
     run nvim --headless "+Lazy! sync" "+luafile $DOTFILES_DIR/scripts/nvim-sync.lua" +qa
   fi
 }
+
+# ---- Symlinking (install.sh and install-<thing>.sh) ----
+# Honour DRY_RUN through `run`. Everything is relative to $DOTFILES_DIR and $HOME.
+
+# link_file <repo-relative path>: symlink it into $HOME, moving a real file in the way to *.bak.
+link_file() {
+  local f=$1 bak
+  run mkdir -p "$HOME/$(dirname "$f")"
+  # Already resolves to the repo file (e.g. ~/.config/sway is itself a symlink into the repo): leave it.
+  if [ "$(cd -P "$(dirname "$HOME/$f")" 2>/dev/null && pwd)/$(basename "$f")" = "$DOTFILES_DIR/$f" ]; then return 0; fi
+  if [ -e "$HOME/$f" ] && [ ! -L "$HOME/$f" ]; then
+    bak="$HOME/$f.bak"
+    [ -e "$bak" ] && bak="$bak.$(date +%s)"
+    run mv "$HOME/$f" "$bak"
+  fi
+  run ln -sfn "$DOTFILES_DIR/$f" "$HOME/$f"
+}
+
+# link_tracked [-x ERE] [pathspec...]: link every git-tracked file (limited to the pathspecs,
+# minus the ones matching ERE) into $HOME.
+link_tracked() {
+  local excl="" f
+  if [ "${1:-}" = -x ]; then excl=$2; shift 2; fi
+  git -C "$DOTFILES_DIR" ls-files -- "$@" \
+    | { if [ -n "$excl" ]; then grep -vE "$excl" || true; else cat; fi; } \
+    | while read -r f; do link_file "$f"; done
+}
+
+# prune_links <dir>: drop symlinks under dir that point into this repo but whose target was deleted.
+prune_links() {
+  [ -d "$1" ] || return 0
+  if [ "$DRY_RUN" = 1 ]; then find "$1" -type l ! -exec test -e {} \; -lname "$DOTFILES_DIR/*" -print
+  else find "$1" -type l ! -exec test -e {} \; -lname "$DOTFILES_DIR/*" -print -delete; fi
+}
+
+# Per-OS alacritty settings: platform.toml (untracked) points at platform-<os>.toml (font size differs).
+link_alacritty_platform() {
+  local os=linux
+  [ "$(uname -s)" = Darwin ] && os=macos
+  run mkdir -p "$HOME/.config/alacritty"
+  run ln -sfn "$DOTFILES_DIR/.config/alacritty/platform-$os.toml" "$HOME/.config/alacritty/platform.toml"
+}
+
+# fish plugins: fisher + everything in .config/fish/fish_plugins (only when fisher is missing), then
+# Oh My Fish (prompt theme; theme/bundle are linked from .config/omf). Needs fish, curl, git and network.
+setup_fish_plugins() {
+  have fish || { warn "fish is not installed (run ./install-deps.sh or install it with your package manager)"; return 0; }
+  if ! fish -c 'functions -q fisher' 2>/dev/null; then
+    log "Installing fisher + plugins"
+    run fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update' \
+      || warn "fisher bootstrap failed (needs curl + network); run: fisher update"
+  fi
+  if have git && [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/omf/init.fish" ]; then
+    log "Installing Oh My Fish"
+    if [ "$DRY_RUN" = 1 ]; then echo "+ git clone oh-my-fish && fish bin/install --offline --noninteractive --yes && omf install"; return 0; fi
+    local src; src=$(mktemp -d)
+    if git clone --depth 1 https://github.com/oh-my-fish/oh-my-fish "$src" \
+      && fish "$src/bin/install" --offline --noninteractive --yes; then
+      fish -c 'omf install' || warn "'omf install' failed; run it manually"
+    else
+      warn "Oh My Fish install failed"
+    fi
+    rm -rf "$src"
+  fi
+}

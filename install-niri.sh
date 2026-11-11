@@ -19,18 +19,7 @@ case "${1:-}" in
 esac
 
 link_niri() {
-  local f bak
-  cd "$DOTFILES_DIR"
-  git ls-files .config/niri | while read -r f; do
-    run mkdir -p "$HOME/$(dirname "$f")"
-    [ "$(cd -P "$(dirname "$HOME/$f")" && pwd)/$(basename "$f")" = "$PWD/$f" ] && continue
-    if [ -e "$HOME/$f" ] && [ ! -L "$HOME/$f" ]; then
-      bak="$HOME/$f.bak"
-      [ -e "$bak" ] && bak="$bak.$(date +%s)"
-      run mv "$HOME/$f" "$bak"
-    fi
-    run ln -sfn "$PWD/$f" "$HOME/$f"
-  done
+  link_tracked .config/niri
   run mkdir -p "$HOME/Pictures/Screenshots"
 }
 

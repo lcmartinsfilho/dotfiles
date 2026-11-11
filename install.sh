@@ -1,27 +1,20 @@
 #!/usr/bin/env bash
 # Symlink every tracked dotfile into $HOME (backs up existing files as *.bak).
+# The partial installers (install-nvim.sh, install-alacritty.sh, install-fish.sh) do the same for one
+# tool; all of them share the helpers in scripts/common.sh. DRY_RUN=1 only prints the commands.
 set -euo pipefail
-cd "$(dirname "$0")"
-git ls-files | grep -vE '^((install|update)[a-z-]*\.sh|scripts/.*|openspec/.*|\.agents/.*|README.md|\.githooks/.*|\.config/niri/.*)$' | while read -r f; do
-  mkdir -p "$HOME/$(dirname "$f")"
-  # Already resolves to the repo file (e.g. ~/.config/sway is itself a symlink into the repo): leave it.
-  [ "$(cd -P "$(dirname "$HOME/$f")" && pwd)/$(basename "$f")" = "$PWD/$f" ] && continue
-  if [ -e "$HOME/$f" ] && [ ! -L "$HOME/$f" ]; then
-    bak="$HOME/$f.bak"
-    [ -e "$bak" ] && bak="$bak.$(date +%s)"
-    mv "$HOME/$f" "$bak"
-  fi
-  ln -sfn "$PWD/$f" "$HOME/$f"
-done
+DOTFILES_DIR=$(cd -P "$(dirname "$0")" && pwd)
+# shellcheck disable=SC1091
+. "$DOTFILES_DIR/scripts/common.sh"
 
-# Per-OS alacritty settings (font size differs between macOS and Linux).
-case "$(uname -s)" in Darwin) os=macos ;; *) os=linux ;; esac
-ln -sfn "$PWD/.config/alacritty/platform-$os.toml" "$HOME/.config/alacritty/platform.toml"
+link_tracked -x '^((install|update)[a-z-]*\.sh|scripts/.*|openspec/.*|\.agents/.*|README.md|\.githooks/.*|\.config/niri/.*)$'
+link_alacritty_platform
 
 # Enable the secret-scanning pre-commit hook.
-git config core.hooksPath .githooks
+run git -C "$DOTFILES_DIR" config core.hooksPath .githooks
 
-# Drop neovim links that point into this repo but whose target was deleted (e.g. removed plugin specs).
-if [ -d "$HOME/.config/nvim" ]; then
-  find "$HOME/.config/nvim" -type l ! -exec test -e {} \; -lname "$PWD/*" -delete
-fi
+# Drop links that point into this repo but whose target was deleted (removed plugin specs, functions, ...).
+for d in nvim alacritty fish omf shell; do prune_links "$HOME/.config/$d"; done
+
+# fisher plugins + Oh My Fish (same step as install-fish.sh; no-op once installed).
+setup_fish_plugins
