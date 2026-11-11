@@ -11,7 +11,7 @@ user to run `install.sh` next to symlink the dotfiles.
 
 #### Scenario: Fresh machine
 - **WHEN** the user runs `./install-deps.sh`
-- **THEN** the base packages, Rust, oh-my-zsh, Node (nvm, or pkg on FreeBSD), Claude Code, the CodeGraph CLI and the OpenSpec CLI are installed
+- **THEN** the base packages (including the zsh and fish shells), Rust, oh-my-zsh, Node (fnm, or pkg on FreeBSD), Claude Code, the CodeGraph CLI and the OpenSpec CLI are installed
 
 ### Requirement: Idempotent installs
 Re-running the script SHALL NOT reinstall or break tools that are already present and sufficiently recent.

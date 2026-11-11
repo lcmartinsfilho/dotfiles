@@ -28,13 +28,13 @@ listing of pending macOS system updates on macOS; pkg plus `freebsd-update` on F
 - **THEN** the run SHALL continue and report that there are none
 
 ### Requirement: Toolchain updates
-The update SHALL refresh, when present: Rust (`rustup`), the latest Node LTS through nvm (reinstalling the
-current version's global packages, updating npm, and making the LTS the nvm default), npm global packages,
+The update SHALL refresh, when present: Rust (`rustup`), the latest Node LTS through fnm (carrying over the
+previous version's global packages by name, updating npm, and making the LTS the fnm default), npm global packages,
 Claude Code, the CodeGraph CLI, and the Neovim plugins and mason tools.
 
-#### Scenario: nvm manages Node
-- **WHEN** nvm is installed
-- **THEN** the latest LTS Node is installed, becomes the nvm default, and npm globals are updated under it
+#### Scenario: fnm manages Node
+- **WHEN** fnm is installed
+- **THEN** the latest LTS Node is installed, becomes the fnm default, the previous version's global packages are installed under it, and npm globals are updated
 
 #### Scenario: Neovim sync
 - **WHEN** `nvim` is available
