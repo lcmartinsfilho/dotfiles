@@ -7,7 +7,7 @@ import = [
 [terminal.shell]
 # Prefer zsh when installed, otherwise fall back to the user's default shell
 program = "/bin/sh"
-args = ["-c", "if command -v zsh >/dev/null 2>&1; then exec zsh -l; else exec \"${SHELL:-/bin/sh}\" -l; fi"]
+args = ["-c", "if command -v zsh >/dev/null 2>&1; then exec fish -l; else exec \"${SHELL:-/bin/sh}\" -l; fi"]
 
 [window]
 opacity = 1.0
