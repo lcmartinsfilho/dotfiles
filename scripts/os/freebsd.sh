@@ -10,14 +10,14 @@ os_setup() { setup_sudo; }
 
 pkg_try() { local p; for p in "$@"; do run $SUDO pkg install -y "$p" || MISSING+=("$p"); done; }
 
-# bash: the scripts here; git/zsh/gmake: shell, lazy.nvim, treesitter parsers (cc is in base);
+# bash: the scripts here; git/zsh/fish/gmake: shell, lazy.nvim, treesitter parsers (cc is in base);
 # neovim >= 0.11.2 (LazyVim); tree-sitter-cli: nvim-treesitter; eza/fzf: .zshrc; ripgrep/fd-find: snacks picker (LazyVim);
 # lazygit: LazyVim <leader>gg; hs-pandoc: pandoc.nvim; gitleaks: pre-commit hook; node/npm: mason npm tools;
 # python3: mason pypi/venv; openjdk21: ltex-ls-plus; wl-clipboard/xclip: clipboard=unnamedplus;
 # lua-language-server, stylua, ruff, llvm19 (clangd/clang-format), rust-analyzer: LSPs/formatters mason can't fetch here.
 os_install_base() {
   log "Installing packages"
-  run $SUDO pkg install -y bash git curl wget unzip gmake zsh tmux neovim tree-sitter-cli eza fzf ripgrep fd-find lazygit \
+  run $SUDO pkg install -y bash git curl wget unzip gmake zsh fish tmux neovim tree-sitter-cli eza fzf ripgrep fd-find lazygit \
     hs-pandoc gitleaks node npm python3 openjdk21 wl-clipboard xclip \
     lua-language-server stylua ruff py312-debugpy llvm19 rustup-init
 }

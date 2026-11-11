@@ -13,3 +13,4 @@ ngrok.yml
 .config/nvim/lazy-lock.json
 .config/mimeapps.list
 log.txt
+.config/fish/fish_variables
