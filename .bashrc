@@ -26,7 +26,7 @@ unset rc
 . "$HOME/.cargo/env"
 
 # fnm (same as .zshrc)
-command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell bash)"
+[ -f "$HOME/.config/shell/fnm-env.sh" ] && . "$HOME/.config/shell/fnm-env.sh"
 
 if [ "$(uname -s)" = Darwin ]; then
   # >>> conda initialize >>>

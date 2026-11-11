@@ -113,8 +113,8 @@ alias ll="eza -lha"
 source <(fzf --zsh)
 export PATH="$HOME/.local/bin:$PATH"
 
-# fnm: Node versions, switches automatically on .nvmrc/.node-version
-command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
+# fnm: Node versions per project (.nvmrc/.node-version), auto-install, back to default on leaving
+[ -f "$HOME/.config/shell/fnm-env.sh" ] && . "$HOME/.config/shell/fnm-env.sh"
 
 [ -f ~/.secrets ] && source ~/.secrets  # defines GITHUB_PERSONAL_ACCESS_TOKEN (untracked)
 
