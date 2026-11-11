@@ -6,7 +6,15 @@ if status is-interactive
     command -q fzf; and fzf --fish 2>/dev/null | source
 
     # zoxide: z / zi
-    command -q zoxide; and zoxide init fish | source
+    # zoxide derives __zoxide_cd_internal from $__fish_data_dir/functions/cd.fish; where that file
+    # is missing (e.g. FreeBSD, fish embeds its functions) the function is never defined, so
+    # pre-define a fallback (zoxide skips it when it already exists).
+    if command -q zoxide
+        functions -q __zoxide_cd_internal; or function __zoxide_cd_internal --wraps=cd
+            builtin cd $argv
+        end
+        zoxide init fish | source
+    end
 
     # fnm: per-project Node versions (.nvmrc / .node-version)
     if command -q fnm
