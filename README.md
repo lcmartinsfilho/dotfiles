@@ -41,3 +41,7 @@ Secrets live in untracked `~/.secrets` (sourced by `.zshrc`), e.g.:
 To install only the neovim config:
 
     git clone <repo> ~/dotfiles && ~/dotfiles/install-nvim.sh
+
+To link only the fish config (fish itself comes from `install-deps.sh` or your package manager):
+
+    ~/dotfiles/install-fish.sh
