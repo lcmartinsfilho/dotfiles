@@ -8,12 +8,22 @@ command -q fzf; and fzf --fish | source
 
 # fnm: per-project Node versions (.nvmrc / .node-version)
 if command -q fnm
-    fnm env --use-on-cd --shell fish | source
-    # Same hook as fnm's, plus --install-if-missing: download the version on first visit.
+    fnm env --use-on-cd --version-file-strategy=recursive --shell fish | source
+    # Replaces fnm's hook: looks for .node-version/.nvmrc in parent dirs too, installs the version
+    # if missing, and goes back to the default Node after leaving the project.
     function _fnm_autoload_hook --on-variable PWD --description 'Change Node version on directory change'
         status --is-command-substitution; and return
-        if test -f .node-version -o -f .nvmrc -o -f package.json
+        set -l d $PWD
+        while not test -f $d/.node-version -o -f $d/.nvmrc
+            test $d = /; and break
+            set d (path dirname $d)
+        end
+        if test -f $d/.node-version -o -f $d/.nvmrc
+            set -g __fnm_project_node 1
             fnm use --install-if-missing --silent-if-unchanged
+        else if set -q __fnm_project_node
+            set -e __fnm_project_node
+            fnm use default --silent-if-unchanged
         end
     end
     _fnm_autoload_hook
