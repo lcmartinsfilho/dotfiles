@@ -4,7 +4,7 @@
 # so C/C++/Rust debugging through nvim-dap is unavailable.
 LTEX_VERSION=18.7.0
 RUSTUP_INIT=rustup-init
-OS_NODE=pkg   # node/npm come from pkg, not nvm
+OS_NODE=pkg   # node/npm come from pkg, not fnm
 
 os_setup() { setup_sudo; }
 

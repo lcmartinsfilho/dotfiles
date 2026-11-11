@@ -5,7 +5,6 @@ DRY_RUN=${DRY_RUN:-0}
 GUI=${GUI:-0}
 INSTALL_CLAUDE=${INSTALL_CLAUDE:-ask}   # ask | yes | no (install-deps.sh --claude / --no-claude)
 BIN="$HOME/.local/bin"
-NVM_VERSION=v0.40.3
 MISSING=()
 SUDO=""
 
@@ -110,15 +109,16 @@ ensure_login_shell() {
   LOGIN_SHELL_CHANGED=1
 }
 
-# nvm + Node LTS (needed by mason: vtsls, eslint, prettier, js-debug-adapter).
-install_nvm_node() {
-  if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
-    log "Installing nvm $NVM_VERSION"
-    run bash -c "curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | PROFILE=/dev/null bash"
+# fnm + Node LTS (needed by mason: vtsls, eslint, prettier, js-debug-adapter).
+# fnm is a single Rust binary: brew on macOS, otherwise built with cargo (install_rust runs first; ~5 min).
+install_fnm_node() {
+  if ! have fnm; then
+    log "Installing fnm"
+    if have brew; then run brew install fnm
+    else run cargo install --locked fnm; fi
   fi
   [ "$DRY_RUN" = 1 ] && return 0
-  # nvm.sh isn't safe under errexit/nounset, so load it in a subshell with both off.
-  ( set +eu; export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"; nvm install --lts )
+  fnm install --lts && fnm default lts-latest
 }
 
 # settings.json hooks call `codegraph prompt-hook`.
@@ -168,22 +168,21 @@ install_jetbrains_nerd_font() { install_nerd_font JetBrainsMono "JetBrainsMono N
 update_rust() { if have rustup; then log "rustup"; run rustup update; fi; }
 
 update_node() {
-  local nvm="${NVM_DIR:-$HOME/.nvm}/nvm.sh"
-  if [ -s "$nvm" ]; then
-    log "node (nvm) + npm globals"
+  if have fnm; then
+    log "node (fnm) + npm globals"
     if [ "$DRY_RUN" = 1 ]; then
-      echo "+ nvm install --lts --reinstall-packages-from=<current> --latest-npm"
-      echo "+ nvm alias default 'lts/*'"
+      echo "+ fnm install --lts && fnm default lts-latest"
+      echo "+ npm install -g <globals of the previous node>"
       echo "+ npm update -g"
     else
-      # Subshell: nvm.sh isn't safe under errexit/nounset, and npm must run under the new node.
-      ( set +eu; . "$nvm"
-        prev=$(nvm current)
-        case $prev in
-          none|system|"") nvm install --lts --latest-npm ;;
-          *)              nvm install --lts --reinstall-packages-from="$prev" --latest-npm ;;
-        esac
-        nvm alias default 'lts/*' >/dev/null   # new shells follow the latest LTS
+      # Subshell: errexit would abort on fnm's own non-zero exits, and npm must run under the new node.
+      ( set +eu; eval "$(fnm env)"
+        fnm use default >/dev/null 2>&1
+        # fnm has no --reinstall-packages-from: carry the global packages over by name (npm/corepack ship with node).
+        pkgs=$(npm ls -g --depth=0 --parseable 2>/dev/null | sed -n 's#.*/lib/node_modules/##p' | grep -vxE 'npm|corepack')
+        fnm install --lts && fnm default lts-latest   # new shells follow the latest LTS
+        fnm use default >/dev/null
+        npm install -g --no-fund --no-audit npm@latest $pkgs
         npm update -g )
     fi
   elif have npm; then

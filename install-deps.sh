@@ -35,7 +35,7 @@ hook os_install_base
 install_rust
 hook os_install_tools
 install_omz
-[ "${OS_NODE:-nvm}" = nvm ] && install_nvm_node
+[ "${OS_NODE:-fnm}" = fnm ] && install_fnm_node
 hook os_install_agents
 if [ "$GUI" = 1 ]; then
   if declare -F os_install_gui >/dev/null; then log "Installing desktop packages"; os_install_gui

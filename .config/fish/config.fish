@@ -6,6 +6,9 @@ set -g fish_greeting
 # fzf: Ctrl-T files, Ctrl-R history, Alt-C cd
 command -q fzf; and fzf --fish | source
 
+# fnm: per-project Node versions (.nvmrc / .node-version)
+command -q fnm; and fnm env --use-on-cd --shell fish | source
+
 # ---- Abbreviations (expand as you type) ----
 abbr -a v nvim
 abbr -a vim nvim

@@ -25,10 +25,8 @@ fi
 unset rc
 . "$HOME/.cargo/env"
 
-# nvm (same as .zshrc)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# fnm (same as .zshrc)
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell bash)"
 
 if [ "$(uname -s)" = Darwin ]; then
   # >>> conda initialize >>>
