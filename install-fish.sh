@@ -20,5 +20,10 @@ done
 if [ -d "$HOME/.config/fish" ]; then
   find "$HOME/.config/fish" -type l ! -exec test -e {} \; -lname "$PWD/*" -print -delete
 fi
+# Plugins: fisher + everything listed in .config/fish/fish_plugins (installed only when fisher is missing)
+if command -v fish >/dev/null 2>&1 && ! fish -c 'functions -q fisher' 2>/dev/null; then
+  fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update' \
+    || echo "warning: fisher bootstrap failed (needs curl + network); run: fisher update" >&2
+fi
 command -v fish >/dev/null 2>&1 || echo "warning: fish is not installed (run ./install-deps.sh or install it with your package manager)" >&2
 echo "fish config linked"
