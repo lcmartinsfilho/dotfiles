@@ -44,6 +44,10 @@ os_install_tools() {
   if ! have eza; then
     pm_install eza || { log "Building eza with cargo"; run cargo install --locked eza; }
   fi
+  # zoxide (`z`): distro package if any, else build with cargo.
+  if ! have zoxide; then
+    pm_install zoxide || { log "Building zoxide with cargo"; run cargo install --locked zoxide; }
+  fi
   if ! have tree-sitter; then
     # The prebuilt upstream binaries need a newer glibc than Ubuntu 22.04 has, so build from source.
     { [ "${PM_HAS_TREE_SITTER:-0}" = 1 ] && pm_install tree-sitter-cli; } \

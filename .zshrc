@@ -111,6 +111,7 @@ alias l="eza"
 alias ll="eza -lha"
 . "$HOME/.cargo/env"
 source <(fzf --zsh)
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"   # z / zi
 export PATH="$HOME/.local/bin:$PATH"
 
 # fnm: Node versions per project (.nvmrc/.node-version), auto-install, back to default on leaving

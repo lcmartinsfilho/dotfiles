@@ -45,3 +45,5 @@ if [ "$(uname -s)" = Darwin ]; then
   # <<< conda initialize <<<
 fi
 
+# zoxide (z / zi); keep this last so nothing else overrides its PROMPT_COMMAND hook
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"

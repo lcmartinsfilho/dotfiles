@@ -5,6 +5,9 @@ if status is-interactive
     # fzf: Ctrl-T files, Ctrl-R history, Alt-C cd
     command -q fzf; and fzf --fish 2>/dev/null | source
 
+    # zoxide: z / zi
+    command -q zoxide; and zoxide init fish | source
+
     # fnm: per-project Node versions (.nvmrc / .node-version)
     if command -q fnm
         fnm env --use-on-cd --version-file-strategy=recursive --shell fish | source
