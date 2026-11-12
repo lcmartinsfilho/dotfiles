@@ -100,6 +100,9 @@ install_omz_plugins() {
   done
 }
 
+# oh-my-zsh + its plugins (shared by install-deps.sh and install-zsh.sh).
+install_zsh_env() { install_omz; install_omz_plugins; }
+
 # Make zsh the login shell: a console/SSH login only reads .zshrc when it is. Takes effect at the next login.
 login_shell() {
   if have getent; then getent passwd "$USER" | cut -d: -f7
