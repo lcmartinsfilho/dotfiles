@@ -89,6 +89,17 @@ install_omz() {
   run omz_installer
 }
 
+# fish-like zsh: grey inline suggestions from history + command highlighting (.zshrc lists them in plugins=(); highlighting last).
+install_omz_plugins() {
+  local dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins" p
+  [ -d "$HOME/.oh-my-zsh" ] || [ "$DRY_RUN" = 1 ] || return 0
+  for p in zsh-autosuggestions zsh-syntax-highlighting; do
+    [ -d "$dir/$p" ] && continue
+    log "Installing $p"
+    run git clone --depth 1 "https://github.com/zsh-users/$p" "$dir/$p" || warn "could not install $p"
+  done
+}
+
 # Make zsh the login shell: a console/SSH login only reads .zshrc when it is. Takes effect at the next login.
 login_shell() {
   if have getent; then getent passwd "$USER" | cut -d: -f7

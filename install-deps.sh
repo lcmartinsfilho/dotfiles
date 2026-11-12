@@ -35,6 +35,7 @@ hook os_install_base
 install_rust
 hook os_install_tools
 install_omz
+install_omz_plugins
 [ "${OS_NODE:-nvm}" = nvm ] && install_nvm_node
 hook os_install_agents
 if [ "$GUI" = 1 ]; then
