@@ -1,3 +1,6 @@
+# Tools installed by install-deps.sh (fzf, nvim, ...) live here; must precede anything that calls them.
+export PATH="$HOME/.local/bin:$PATH"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -110,9 +113,8 @@ alias vim="nvim"
 alias l="eza"
 alias ll="eza -lha"
 . "$HOME/.cargo/env"
-source <(fzf --zsh)
+command -v fzf >/dev/null && source <(fzf --zsh)
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"   # z / zi
-export PATH="$HOME/.local/bin:$PATH"
 
 # nvm (same path on macOS and Linux)
 export NVM_DIR="$HOME/.nvm"
