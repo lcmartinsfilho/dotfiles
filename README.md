@@ -10,6 +10,8 @@ forces an OS; `--gui` also installs sway, waybar, wofi, rofi, alacritty and font
 
     ./install-deps.sh [--gui]
 
+It also makes zsh your login shell (log out and back in for it to apply).
+
 [Niri](https://github.com/YaLTeR/niri) is optional and kept separate (its config lives in `.config/niri/`,
 which `install.sh` skips). Install it, its dependencies (waybar, wofi, mako, polkit agent, ...) and
 link its config with:
@@ -39,7 +41,3 @@ Secrets live in untracked `~/.secrets` (sourced by `.zshrc`), e.g.:
 To install only the neovim config:
 
     git clone <repo> ~/dotfiles && ~/dotfiles/install.sh nvim
-
-To link only the fish config (fish itself comes from `install-deps.sh` or your package manager):
-
-    ~/dotfiles/install.sh fish

@@ -5,9 +5,9 @@ import = [
 ]
 
 [terminal.shell]
-# Prefer fish, then zsh, bash, sh: the first one installed becomes the login shell
+# Prefer zsh, then bash, sh: the first one installed becomes the login shell
 program = "/bin/sh"
-args = ["-c", "PATH=/opt/homebrew/bin:/usr/local/bin:$PATH; for s in fish zsh bash; do if command -v $s >/dev/null 2>&1; then exec $s -l; fi; done; exec sh -l"]
+args = ["-c", "PATH=/opt/homebrew/bin:/usr/local/bin:$PATH; for s in zsh bash; do if command -v $s >/dev/null 2>&1; then exec $s -l; fi; done; exec sh -l"]
 
 [window]
 opacity = 1.0

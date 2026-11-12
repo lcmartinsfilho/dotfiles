@@ -35,15 +35,17 @@ hook os_install_base
 install_rust
 hook os_install_tools
 install_omz
-[ "${OS_NODE:-fnm}" = fnm ] && install_fnm_node
+[ "${OS_NODE:-nvm}" = nvm ] && install_nvm_node
 hook os_install_agents
 if [ "$GUI" = 1 ]; then
   if declare -F os_install_gui >/dev/null; then log "Installing desktop packages"; os_install_gui
   else warn "--gui: no desktop packages for $OS"; fi
 fi
 
+ensure_login_shell
 echo
 log "Done. Next: ./install.sh."
+[ "${LOGIN_SHELL_CHANGED:-0}" = 1 ] && log "zsh is now your login shell; log out and back in (a new terminal window is not enough) for it to apply."
 [ ${#MISSING[@]} -eq 0 ] || warn "packages that failed to install: ${MISSING[*]}"
 if [ "$GUI" != 1 ] && declare -F os_install_gui >/dev/null; then
   echo "Desktop pieces (sway/waybar/wofi/alacritty/fonts) were skipped; re-run with --gui to install them."

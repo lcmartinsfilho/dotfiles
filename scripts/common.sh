@@ -5,6 +5,7 @@ DRY_RUN=${DRY_RUN:-0}
 GUI=${GUI:-0}
 INSTALL_CLAUDE=${INSTALL_CLAUDE:-ask}   # ask | yes | no (install-deps.sh --claude / --no-claude)
 BIN="$HOME/.local/bin"
+NVM_VERSION=v0.40.3
 MISSING=()
 SUDO=""
 
@@ -88,16 +89,36 @@ install_omz() {
   run omz_installer
 }
 
-# fnm + Node LTS (needed by mason: vtsls, eslint, prettier, js-debug-adapter).
-# fnm is a single Rust binary: brew on macOS, otherwise built with cargo (install_rust runs first; ~5 min).
-install_fnm_node() {
-  if ! have fnm; then
-    log "Installing fnm"
-    if have brew; then run brew install fnm
-    else run cargo install --locked fnm; fi
+# Make zsh the login shell: a console/SSH login only reads .zshrc when it is. Takes effect at the next login.
+login_shell() {
+  if have getent; then getent passwd "$USER" | cut -d: -f7
+  elif have dscl; then dscl . -read "/Users/$USER" UserShell | awk '{print $2}'
+  fi
+}
+ensure_login_shell() {
+  local zsh_path
+  zsh_path=$(command -v zsh) || { [ "$DRY_RUN" = 1 ] && zsh_path=/usr/bin/zsh || { warn "zsh not found; cannot set it as login shell"; return 0; }; }
+  case "$(login_shell)" in */zsh) return 0 ;; esac
+  log "Setting zsh as the login shell"
+  if [ -f /etc/shells ] && ! grep -qx "$zsh_path" /etc/shells; then
+    if [ "$DRY_RUN" = 1 ]; then printf '+ echo %s | %s tee -a /etc/shells\n' "$zsh_path" "${SUDO:-sudo}"
+    else echo "$zsh_path" | $SUDO tee -a /etc/shells >/dev/null || warn "could not add $zsh_path to /etc/shells"; fi
+  fi
+  if have chsh; then run chsh -s "$zsh_path" || warn "chsh failed; run: chsh -s $zsh_path"
+  elif have usermod; then run $SUDO usermod -s "$zsh_path" "$USER" || warn "usermod failed; run: sudo usermod -s $zsh_path $USER"
+  else warn "no chsh/usermod; set the login shell to $zsh_path manually"; fi
+  LOGIN_SHELL_CHANGED=1
+}
+
+# nvm + Node LTS (needed by mason: vtsls, eslint, prettier, js-debug-adapter).
+install_nvm_node() {
+  if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
+    log "Installing nvm $NVM_VERSION"
+    run bash -c "curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh | PROFILE=/dev/null bash"
   fi
   [ "$DRY_RUN" = 1 ] && return 0
-  fnm install --lts && fnm default lts-latest
+  # nvm.sh isn't safe under errexit/nounset, so load it in a subshell with both off.
+  ( set +eu; export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"; nvm install --lts )
 }
 
 # settings.json hooks call `codegraph prompt-hook`.
@@ -147,21 +168,22 @@ install_jetbrains_nerd_font() { install_nerd_font JetBrainsMono "JetBrainsMono N
 update_rust() { if have rustup; then log "rustup"; run rustup update; fi; }
 
 update_node() {
-  if have fnm; then
-    log "node (fnm) + npm globals"
+  local nvm="${NVM_DIR:-$HOME/.nvm}/nvm.sh"
+  if [ -s "$nvm" ]; then
+    log "node (nvm) + npm globals"
     if [ "$DRY_RUN" = 1 ]; then
-      echo "+ fnm install --lts && fnm default lts-latest"
-      echo "+ npm install -g <globals of the previous node>"
+      echo "+ nvm install --lts --reinstall-packages-from=<current> --latest-npm"
+      echo "+ nvm alias default 'lts/*'"
       echo "+ npm update -g"
     else
-      # Subshell: errexit would abort on fnm's own non-zero exits, and npm must run under the new node.
-      ( set +eu; eval "$(fnm env)"
-        fnm use default >/dev/null 2>&1
-        # fnm has no --reinstall-packages-from: carry the global packages over by name (npm/corepack ship with node).
-        pkgs=$(npm ls -g --depth=0 --parseable 2>/dev/null | sed -n 's#.*/lib/node_modules/##p' | grep -vxE 'npm|corepack')
-        fnm install --lts && fnm default lts-latest   # new shells follow the latest LTS
-        fnm use default >/dev/null
-        npm install -g --no-fund --no-audit npm@latest $pkgs
+      # Subshell: nvm.sh isn't safe under errexit/nounset, and npm must run under the new node.
+      ( set +eu; . "$nvm"
+        prev=$(nvm current)
+        case $prev in
+          none|system|"") nvm install --lts --latest-npm ;;
+          *)              nvm install --lts --reinstall-packages-from="$prev" --latest-npm ;;
+        esac
+        nvm alias default 'lts/*' >/dev/null   # new shells follow the latest LTS
         npm update -g )
     fi
   elif have npm; then
@@ -221,27 +243,4 @@ link_alacritty_platform() {
   [ "$(uname -s)" = Darwin ] && os=macos
   run mkdir -p "$HOME/.config/alacritty"
   run ln -sfn "$DOTFILES_DIR/.config/alacritty/platform-$os.toml" "$HOME/.config/alacritty/platform.toml"
-}
-
-# fish plugins: fisher + everything in .config/fish/fish_plugins (only when fisher is missing), then
-# Oh My Fish (prompt theme; theme/bundle are linked from .config/omf). Needs fish, curl, git and network.
-setup_fish_plugins() {
-  have fish || { warn "fish is not installed (run ./install-deps.sh or install it with your package manager)"; return 0; }
-  if ! fish -c 'functions -q fisher' 2>/dev/null; then
-    log "Installing fisher + plugins"
-    run fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update' \
-      || warn "fisher bootstrap failed (needs curl + network); run: fisher update"
-  fi
-  if have git && [ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/omf/init.fish" ]; then
-    log "Installing Oh My Fish"
-    if [ "$DRY_RUN" = 1 ]; then echo "+ git clone oh-my-fish && fish bin/install --offline --noninteractive --yes && omf install"; return 0; fi
-    local src; src=$(mktemp -d)
-    if git clone --depth 1 https://github.com/oh-my-fish/oh-my-fish "$src" \
-      && fish "$src/bin/install" --offline --noninteractive --yes; then
-      fish -c 'omf install' || warn "'omf install' failed; run it manually"
-    else
-      warn "Oh My Fish install failed"
-    fi
-    rm -rf "$src"
-  fi
 }

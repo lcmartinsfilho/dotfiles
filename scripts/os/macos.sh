@@ -28,12 +28,12 @@ cask_try() {
   done
 }
 
-# git/zsh/fish: shells + lazy.nvim; neovim >= 0.11.2 (LazyVim); tree-sitter-cli: nvim-treesitter (main branch);
+# git/zsh: shells + lazy.nvim; neovim >= 0.11.2 (LazyVim); tree-sitter-cli: nvim-treesitter (main branch);
 # eza/fzf/zoxide: aliases + `fzf --zsh` in .zshrc; ripgrep/fd: snacks picker (LazyVim); pandoc: pandoc.nvim; gitleaks: pre-commit hook;
 # python: mason's pypi packages (ruff, debugpy, basedpyright); wget: mason downloads.
 os_install_base() {
   log "Installing formulae"
-  run brew install git zsh fish neovim tmux tree-sitter-cli eza fzf zoxide ripgrep fd lazygit pandoc gitleaks python wget
+  run brew install git zsh neovim tmux tree-sitter-cli eza fzf zoxide ripgrep fd lazygit pandoc gitleaks python wget
 
   # alacritty: terminal; iterm2: provides the cc-status script used by the Claude Code hooks;
   # nerd fonts: symbols-only gives icons in nvim (mini.icons, blink.cmp); jetbrains is alacritty's font.

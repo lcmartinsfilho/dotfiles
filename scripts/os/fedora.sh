@@ -4,12 +4,12 @@ pm_install() { run $SUDO dnf install -y "$@"; }
 # shellcheck disable=SC1091
 . "$DOTFILES_DIR/scripts/os/linux.sh"
 
-# git/zsh/fish: shells + lazy.nvim; compiler+make: treesitter parsers;
+# git/zsh: shells + lazy.nvim; compiler+make: treesitter parsers;
 # ripgrep/fd: snacks picker (LazyVim); pandoc: pandoc.nvim; python3: mason pypi packages;
 # curl/wget/unzip/tar/gzip: mason downloads; wl-clipboard/xclip: clipboard=unnamedplus.
 os_install_base() {
   log "Installing base packages (dnf)"
-  pm_install git wget unzip tar gzip xz gcc gcc-c++ make zsh fish util-linux-user python3 python3-pip \
+  pm_install git wget unzip tar gzip xz gcc gcc-c++ make zsh util-linux-user python3 python3-pip \
     ripgrep fd-find pandoc wl-clipboard xclip fontconfig tmux
   have curl || pm_install curl   # skip when curl-minimal is already there
 }

@@ -1,5 +1,5 @@
 . "$HOME/.cargo/env"
-[ -f "$HOME/.config/shell/fnm-path.sh" ] && . "$HOME/.config/shell/fnm-path.sh"
+[ -f "$HOME/.config/shell/nvm-path.sh" ] && . "$HOME/.config/shell/nvm-path.sh"
 
 
 # Added by Toolbox App
