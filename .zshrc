@@ -1,6 +1,8 @@
 # Tools installed by install-deps.sh (claude, lazygit, ...) live here. Appended, not prepended, so a
 # file dropped in this user-writable dir cannot shadow system binaries (sudo, ssh, ...).
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$PATH:$HOME/.local/bin" ;; esac
+# opencode's official installer drops its binary here. Appended for the same reason as above.
+case ":$PATH:" in *":$HOME/.opencode/bin:"*) ;; *) export PATH="$PATH:$HOME/.opencode/bin" ;; esac
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
