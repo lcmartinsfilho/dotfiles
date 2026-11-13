@@ -1,5 +1,6 @@
-# Tools installed by install-deps.sh (fzf, nvim, ...) live here; must precede anything that calls them.
-export PATH="$HOME/.local/bin:$PATH"
+# Tools installed by install-deps.sh (claude, lazygit, ...) live here. Appended, not prepended, so a
+# file dropped in this user-writable dir cannot shadow system binaries (sudo, ssh, ...).
+case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$PATH:$HOME/.local/bin" ;; esac
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
@@ -120,6 +121,8 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"   # z / zi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# nvm.sh prepends the active node; move it behind the system dirs (no shadowing of sudo, ssh, ...).
+[[ -n $NVM_BIN ]] && path=(${path:#$NVM_BIN} $NVM_BIN)
 
 [ -f ~/.secrets ] && source ~/.secrets  # defines GITHUB_PERSONAL_ACCESS_TOKEN (untracked)
 

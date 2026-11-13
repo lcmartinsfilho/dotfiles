@@ -120,6 +120,24 @@
   "permissions": {
     "allow": [
       "mcp__codegraph__*"
+    ],
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.secrets)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.config/nchat/**)",
+      "Read(~/.config/BraveSoftware/**)",
+      "Read(~/.gnupg/**)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Edit(~/.ssh/**)",
+      "Edit(~/.claude/.credentials.json)",
+      "Bash(sudo:*)",
+      "Bash(rm -rf /:*)",
+      "Bash(rm -rf ~:*)",
+      "Bash(chmod -R 777:*)"
     ]
   },
   "tui": "fullscreen",
