@@ -1,0 +1,10 @@
+// Match sway: inner gaps 8, outer gaps 4 (sway adds outer on top of inner at the edges)
+layout {
+    gaps 8
+    struts {
+        left 4
+        right 4
+        top 4
+        bottom 4
+    }
+}

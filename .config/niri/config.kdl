@@ -63,7 +63,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -256,3 +256,11 @@ include optional=true "dms/binds.kdl"
 include optional=true "dms/outputs.kdl"
 include optional=true "dms/cursor.kdl"
 include optional=true "dms/input.kdl"
+
+// Override DMS: square window corners (placed after dms includes so it wins)
+window-rule {
+    geometry-corner-radius 0
+}
+
+// Match sway gaps (included last so it overrides dms/layout.kdl)
+include optional=true "sway-gaps.kdl"
