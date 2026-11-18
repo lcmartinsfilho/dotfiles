@@ -17,5 +17,9 @@
         "format": "{:%Y-%m-%d  %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
+    "sway/language": {
+        "format": " {short} {variant}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    },
     "tray": { "spacing": 8 }
 }

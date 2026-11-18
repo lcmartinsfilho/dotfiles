@@ -39,10 +39,19 @@ input type:touchpad natural_scroll enabled
 input type:touchpad pointer_accel 0.6
 input type:pointer pointer_accel 0.6
 input type:pointer natural_scroll enabled
-input "1:1:AT_Translated_Set_2_keyboard" {
-    xkb_layout br
-    xkb_variant thinkpad
+# Default for any keyboard: ABNT2 first, then ThinkPad BR, then US International
+input type:keyboard {
+    xkb_layout "br,br,us"
+    xkb_variant ",thinkpad,intl"
     xkb_model pc105
+    xkb_options grp:alt_shift_toggle
+}
+# ThinkPad built-in keyboard: ThinkPad BR first, then ABNT2, then US International
+input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout "br,br,us"
+    xkb_variant "thinkpad,,intl"
+    xkb_model pc105
+    xkb_options grp:alt_shift_toggle
 }
 
 # Toggle waybar
