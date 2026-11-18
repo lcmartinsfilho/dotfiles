@@ -150,6 +150,8 @@ alias reload="source ~/.zshrc"
 # gup=pull --rebase, gp=push, gpf=push --force-with-lease, gst, gsw, gsta, ...)
 alias lg="lazygit"
 alias gsync="git fetch --all --prune && git pull --rebase --autostash"
+alias gfp="git fetch && git pull --rebase"
+alias gcr="git clean -fxd && git reset --hard"
 alias gclean="git branch --merged | grep -vE '^\*|main|master|develop' | xargs -r git branch -d"
 alias ghpr="gh pr create --fill"
 alias ghprs="gh pr list"
