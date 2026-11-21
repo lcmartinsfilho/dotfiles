@@ -31,6 +31,12 @@ paste into the vault's `CLAUDE.md`; it never writes to the vault.
 
     ./install-vault-search.sh [--no-index]            # DRY_RUN=1 only prints the commands
 
+The OpenSpec trees live in the private [specs](https://github.com/lcmartinsfilho/specs) repo (one folder per
+project), not here. This is optional as well: `install.sh` and `update.sh` never touch it. Clone it to
+`~/specs` and symlink only the `openspec/` directories with:
+
+    ./install-specs.sh [--adopt]                      # DRY_RUN=1 only prints the commands
+
 Update system packages, firmware and toolchains (the `upd` / `update` aliases run this):
 
     ./update.sh
