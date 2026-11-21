@@ -13,3 +13,7 @@ ngrok.yml
 .config/nvim/lazy-lock.json
 .config/mimeapps.list
 log.txt
+
+# OpenSpec lives in the private specs repo (~/specs); linked by its link-openspec.sh
+/openspec
+/openspec.bak-*
