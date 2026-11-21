@@ -3,7 +3,7 @@
 # Usage: ./install-vault-search.sh [--no-index]     (DRY_RUN=1 only prints the commands)
 # Env:   VAULT_SEARCH_DIR   project checkout (default ~/projects/vault-search; cloned from VAULT_SEARCH_REPO if missing)
 #        VAULT_SEARCH_REPO  git remote of the project (default git@github.com:lcmartinsfilho/vault-search.git)
-#        VAULT_PATH         Obsidian vault (asked for if the config doesn't exist yet)
+#        VAULT_PATH         Obsidian vault (asked for if the config doesn't exist yet; default ~/Obsidian/lcm)
 # Does: uv sync, Ollama (installer asks first) as a systemd *user* service, nomic-embed-text, config,
 # index timer, MCP registration in Claude Code and OpenCode (only if installed), agent-instruction snippet.
 # Deliberately NOT run by ./install.sh, ./install-deps.sh or ./update.sh, and nothing here is symlinked
@@ -66,7 +66,7 @@ ollama list 2>/dev/null | grep -q '^nomic-embed-text' || run ollama pull nomic-e
 log "Config"
 if [ ! -f "$CONF" ]; then
   VP=${VAULT_PATH:-}
-  [ -n "$VP" ] || { [ "$DRY_RUN" = 1 ] && VP='<vault>' || read -r -p "Path to your Obsidian vault: " VP; }
+  [ -n "$VP" ] || { [ "$DRY_RUN" = 1 ] && VP='~/Obsidian/lcm' || { read -r -p "Path to your Obsidian vault [~/Obsidian/lcm]: " VP; VP=${VP:-~/Obsidian/lcm}; }; }
   [ -d "${VP/#\~/$HOME}" ] || [ "$DRY_RUN" = 1 ] || die "not a directory: $VP"
   run mkdir -p "$(dirname "$CONF")"
   if [ "$DRY_RUN" = 1 ]; then echo "+ write $CONF (vault_path=$VP)"; else
