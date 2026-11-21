@@ -1,0 +1,7 @@
+[Unit]
+After=ollama.service
+Description=Incrementally index the Obsidian vault for vault-search
+
+[Service]
+Type=oneshot
+ExecStart=%h/projects/vault-search/.venv/bin/vault-search index

@@ -20,6 +20,17 @@ link its config with:
 
 Niri starts its own waybar (`.config/niri/waybar.jsonc`) and mako, so the sway setup is unaffected.
 
+[vault-search](https://github.com/lcmartinsfilho/vault-search) (local semantic search over an Obsidian
+vault, exposed to Claude Code and OpenCode as an MCP server) is optional too: `install.sh` and
+`update.sh` skip it and nothing is symlinked into `$HOME`. The script clones the project to
+`~/projects/vault-search` (`VAULT_SEARCH_DIR`, `VAULT_SEARCH_REPO`), sets up Ollama as a systemd user
+service, writes `~/.config/vault-search/config.toml` (asks for the vault path, or `VAULT_PATH=...`),
+installs the 15-minute index timer, registers the MCP server in Claude Code and OpenCode when they are
+installed, and appends the usage snippet to `~/.config/opencode/AGENTS.md`. It only prints the line to
+paste into the vault's `CLAUDE.md`; it never writes to the vault.
+
+    ./install-vault-search.sh [--no-index]            # DRY_RUN=1 only prints the commands
+
 Update system packages, firmware and toolchains (the `upd` / `update` aliases run this):
 
     ./update.sh
