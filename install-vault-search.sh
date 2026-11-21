@@ -33,6 +33,10 @@ if [ ! -d "$PROJECT" ]; then
   log "Cloning $REPO"
   run git clone "$REPO" "$PROJECT"
 fi
+# Secret-scanning pre-commit hook (core.hooksPath is local config, so a fresh clone needs it set).
+if [ -d "$PROJECT/.githooks" ] || [ "$DRY_RUN" = 1 ]; then
+  run git -C "$PROJECT" config core.hooksPath .githooks
+fi
 have uv || die "uv is required (see install-deps.sh)"
 BIN="$PROJECT/.venv/bin/vault-search"
 
