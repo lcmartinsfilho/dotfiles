@@ -4,7 +4,7 @@
 # Env:   VAULT_SEARCH_DIR   project checkout (default ~/projects/vault-search; cloned from VAULT_SEARCH_REPO if missing)
 #        VAULT_SEARCH_REPO  git remote of the project (default git@github.com:lcmartinsfilho/vault-search.git)
 #        VAULT_PATH         Obsidian vault (asked for if the config doesn't exist yet; default ~/Obsidian/lcm)
-# Does: uv sync, Ollama (installer asks first) as a systemd *user* service, nomic-embed-text, config,
+# Does: uv sync, Ollama (installer asks first) as a systemd *user* service, bge-m3, config,
 # index timer, MCP registration in Claude Code and OpenCode (only if installed), agent-instruction snippet.
 # Deliberately NOT run by ./install.sh, ./install-deps.sh or ./update.sh, and nothing here is symlinked
 # into $HOME. Never touches the vault. Templates live in scripts/vault-search/.
@@ -61,7 +61,7 @@ if [ "$DRY_RUN" != 1 ]; then
   for _ in $(seq 15); do curl -sf -m 2 localhost:11434/api/version >/dev/null 2>&1 && break; sleep 1; done
   curl -sf -m 2 localhost:11434/api/version >/dev/null 2>&1 || die "Ollama is not answering on :11434"
 fi
-ollama list 2>/dev/null | grep -q '^nomic-embed-text' || run ollama pull nomic-embed-text
+ollama list 2>/dev/null | grep -q '^bge-m3' || run ollama pull bge-m3
 
 log "Config"
 if [ ! -f "$CONF" ]; then
