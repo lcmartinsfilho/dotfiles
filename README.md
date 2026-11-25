@@ -31,6 +31,11 @@ paste into the vault's `CLAUDE.md`; it never writes to the vault.
 
     ./install-vault-search.sh [--no-index]            # DRY_RUN=1 only prints the commands
 
+To move the vault (default `~/lcm-local` to `~/Obsidian/lcm`; pass SRC and DEST to change them; close Obsidian first; it repoints
+Obsidian's vault registry, backs up and fixes the LiveSync `data.json`, and can move a file into the vault):
+
+    ./move-obsidian.sh [--list FILE] [SRC [DEST]]              # DRY_RUN=1 only prints the commands
+
 The OpenSpec trees live in the private [specs](https://github.com/lcmartinsfilho/specs) repo (one folder per
 project), not here. This is optional as well: `install.sh` and `update.sh` never touch it. Clone it to
 `~/specs` and symlink only the `openspec/` directories with:
